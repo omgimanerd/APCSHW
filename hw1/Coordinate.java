@@ -12,6 +12,14 @@ public class Coordinate {
         y = newY;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public void setX(int newX) {
         x = newX;
     }
