@@ -1,40 +1,40 @@
 public class Coordinate {
-    private int x;
-    private int y;
+    private int x_;
+    private int y_;
 
     public Coordinate() {
-        x = 0;
-        y = 0;
+        this.x_ = 0;
+        this.y_ = 0;
     }
 
-    public Coordinate(int newX, int newY) {
-        x = newX;
-        y = newY;
+    public Coordinate(int x, int y) {
+        setX(x);
+        setY(y);
     }
 
     public int getX() {
-        return x;
+        return this.x_;
     }
 
     public int getY() {
-        return y;
+        return this.y_;
     }
 
-    public void setX(int newX) {
-        x = newX;
+    public void setX(int x) {
+        this.x_ = x;
     }
 
-    public void setY(int newY) {
-        y = newY;
+    public void setY(int y) {
+        this.y_ = y;
     }
 
-    public void setXY(int newX, int newY) {
-        x = newX;
-        y = newY;
+    public void setXY(int x, int y) {
+        setX(x);
+        setY(y);
     }
 
     public String toString() {
-        String coords = "("+Integer.toString(x)+", "+Integer.toString(y)+")";
+        String coords = "("+this.x_+", "+this.y_+")";
         System.out.println(coords);
         
         return coords;

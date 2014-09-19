@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ls -l *.java
+zip $1 *.java
