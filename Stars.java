@@ -13,13 +13,10 @@ public class Stars {
     String out = "";
     s++;
     for (int i = 0; i < s; ++i) {
-      for (int q = 0; q < s - i - 1; ++q) {
+      for (int j = 0; j < s - i - 1; ++j) {
         out += " ";
       }
-      for (int j = 0; j < i; ++j) {
-        out += "*";
-      }
-      out += "\n";
+      out += rect(1, i);
     }
     return out;
   }
