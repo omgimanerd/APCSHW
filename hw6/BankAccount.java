@@ -10,11 +10,11 @@ public class BankAccount {
                       String username, String password,
                       int pin) {
 
-    this.balance_ = balance;
-    this.account_ = account;
-    this.username_ = username;
-    this.password_ = password;
-    this.pin_ = pin;
+    this.setBalance(balance);
+    this.setAccount(account);
+    this.setUsername(username);
+    this.setPassword(password);
+    this.setPin(pin);
   }
 
   public void setBalance(float balance) {
@@ -22,7 +22,12 @@ public class BankAccount {
   }
 
   public void setAccount(int account) {
-    this.account_ = account;
+    if (account >= 100000000 && account < 999999999) {
+      this.account_ = account;
+    } else {
+      this.account_ = 999999999;
+      System.out.println("Invalid account number");
+    }
   }
 
   public void setUsername(String username) {
@@ -37,12 +42,16 @@ public class BankAccount {
     this.pin_ = pin;
   }
 
-  public void deposit(float amount) {
+  public boolean authenticate(int account, String password) {
+    return this.account_ == account && this.password_ == password;
+  }
+
+  public boolean deposit(float amount) {
     if (amount > 0) {
       this.balance_ += amount;
-    } else {
-      throw new Error("Herpity derp wut are you doing");
+      return true;
     }
+    return false;
   }
 
   public boolean withdraw(String username, String password, float amount) {
@@ -74,13 +83,15 @@ public class BankAccount {
   }
 
   public static void main(String[] args) {
-    BankAccount mine = new BankAccount(100, 1, "Alvin", "derp", 3128);
+    BankAccount mine = new BankAccount(100, 111111111, "Alvin", "derp", 3128);
     mine.print();
     mine.setPassword("hi dere");
     mine.deposit(10);
     mine.print();
+
     System.out.println(mine.toString());
     mine.withdraw("Alvin", "hi dere", 50);
     mine.print();
+    System.out.println(mine.authenticate(111111111, "hi dere"));
   }
 }
