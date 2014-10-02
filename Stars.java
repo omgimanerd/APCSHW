@@ -37,6 +37,14 @@ public class Stars {
     return out;
   }
 
+  public static String tribackDown(int s) {
+    String out = "";
+    for (int i = 0; i < s; ++i) {
+      out += mult(" ", i) + mult("*", s - i) + "\n";
+    }
+    return out;
+  }
+
   public static String rect(int h, int w) {
     String out = "";
     int c1 = 0;
@@ -69,5 +77,6 @@ public class Stars {
     System.out.println(rect(1, 4));
     System.out.println(tri(8));
     System.out.println(triback2(5));
+    System.err.println(tribackDown(5));
   }
 }
