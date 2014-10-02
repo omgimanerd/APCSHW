@@ -1,4 +1,12 @@
 public class Stars {
+  
+  public static String mult(String s, int n) {
+    String out = "";
+    for (int i = 0; i < n; ++i) {
+      out += s;
+    }
+    return out;
+  }
 
   public static String tri(int s) {
     String out = "";
@@ -21,6 +29,13 @@ public class Stars {
     return out;
   }
 
+  public static String triback2(int s) {
+    String out = "";
+    for (int i = 1; i < s + 1; ++i) {
+      out += mult(" ", s - i) + mult("*", i) + "\n";
+    }
+    return out;
+  }
 
   public static String rect(int h, int w) {
     String out = "";
@@ -53,6 +68,6 @@ public class Stars {
     System.out.println(rect(2, 3));
     System.out.println(rect(1, 4));
     System.out.println(tri(8));
-    System.out.println(triback(5));
+    System.out.println(triback2(5));
   }
 }
