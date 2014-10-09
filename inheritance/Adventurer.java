@@ -1,15 +1,18 @@
 public class Adventurer {
   private String name_;
-  private int XP_,HP_;
+  private int HP_;
 
   public Adventurer() {
     this("Lester");
   }
   
   public Adventurer(String name) {
-    this.name_ = name;
-    this.XP_ = 0;
-    this.HP_ = 20;
+    this(name, 20);
+  }
+
+  public Adventurer(String name, int HP) {
+    this.setName(name);
+    this.setHP(HP);
   }
   
   public String getName() {
@@ -26,5 +29,9 @@ public class Adventurer {
 
   public void setHP(int HP) {
     this.HP_ = HP;
+  }
+
+  public String toString() {
+    return "Name: "+this.name_+"\tHP: "+this.HP_;
   }
 }
