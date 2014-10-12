@@ -5,7 +5,7 @@ public class Adventurer {
   public Adventurer() {
     this("Lester");
   }
-  
+
   public Adventurer(String name) {
     this(name, 20);
   }
@@ -14,11 +14,11 @@ public class Adventurer {
     this.setName(name);
     this.setHP(HP);
   }
-  
+
   public String getName() {
     return this.name_;
   }
-   
+
   public void setName(String name) {
     this.name_ = name;
   }
@@ -32,6 +32,6 @@ public class Adventurer {
   }
 
   public String toString() {
-    return "Name: "+this.name_+"\tHP: "+this.HP_;
+    return "Name: " + this.name_ + "\tHP: " + this.HP_;
   }
 }

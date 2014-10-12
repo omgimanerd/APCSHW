@@ -1,16 +1,21 @@
 public class Warrior extends Adventurer {
-  private int bonusHealth_;
+  private int strength_;
 
   public Warrior() {
     super("Carrot Ironfounderson");
-    this.bonusHealth_ = 10;
+    this.setStrength(5);
+    this.setHP(this.getHP() + 10);
   }
 
-  public int getHP() {
-    return this.bonusHealth_ + super.getHP();
-  }
-  
   public String warcry() {
     return "AaaaaaaaaaahahhahhhhhhghRawwr";
+  }
+
+  public int getStrength() {
+    return strength_;
+  }
+
+  public void setStrength(int strength) {
+    this.strength_ = strength;
   }
 }
