@@ -3,8 +3,17 @@ public class Wizard extends Adventurer {
   private int intelligence_;
 
   public Wizard() {
-    super("Tim");
-    this.mana_ = 25;
+    this("Tim");
+  }
+  
+  public Wizard(String name) {
+    this(name, 30, 5);
+  }
+  
+  public Wizard(String name, int mana, int intelligence) {
+    super(name);
+    this.setMana(mana);
+    this.setIntelligence(intelligence);
   }
 
   public int getMana() {
@@ -21,5 +30,10 @@ public class Wizard extends Adventurer {
 
   public void setIntelligence(int intelligence) {
     this.intelligence_ = intelligence;
+  }
+  
+  public String toString() {
+    return super.toString() + "\tMana: " + this.getMana() +
+        "\tINT: " + this.getIntelligence();
   }
 }

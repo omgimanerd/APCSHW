@@ -32,6 +32,6 @@ public class Adventurer {
   }
 
   public String toString() {
-    return "Name: " + this.name_ + "\tHP: " + this.HP_;
+    return "Name: " + this.getName() + "\tHP: " + this.getHP();
   }
 }
