@@ -1,6 +1,9 @@
+import java.util.Random;
+
 public class Warrior extends Adventurer {
   private int rage_;
   private int strength_;
+  private Random rand_ = new Random();
 
   public Warrior() {
     this("Carrot Ironfounderson");
@@ -14,6 +17,16 @@ public class Warrior extends Adventurer {
     super(name);
     this.setRage(rage);
     this.setStrength(strength);
+  }
+
+  public void attack(Adventurer target) {
+    int damage = this.getStrength() + rand_.nextInt(5);
+    target.setHP(target.getHP() - damage);
+    this.setRage(this.getRage() - damage);
+    System.out.println(this.getName() + "dealt " + damage +
+        " damage to " + target.getName());
+    System.out.println(this);
+    System.out.println(target);
   }
   
   public String warcry() {

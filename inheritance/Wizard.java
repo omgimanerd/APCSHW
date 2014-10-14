@@ -1,6 +1,9 @@
+import java.util.Random;
+
 public class Wizard extends Adventurer {
   private int mana_;
   private int intelligence_;
+  private Random rand_ = new Random();
 
   public Wizard() {
     this("Tim");
@@ -16,6 +19,16 @@ public class Wizard extends Adventurer {
     this.setIntelligence(intelligence);
   }
 
+  public void attack(Adventurer target) {
+    int damage = this.getIntelligence() + rand_.nextInt(5);
+    target.setHP(target.getHP() - damage);
+    this.setMana(this.getMana() - damage);
+    System.out.println(this.getName() + " dealt " + damage +
+        " damage to " + target.getName());
+    System.out.println(this);
+    System.out.println(target);
+  }
+  
   public int getMana() {
     return this.mana_;
   }
@@ -25,7 +38,7 @@ public class Wizard extends Adventurer {
   }
 
   public int getIntelligence() {
-    return intelligence_;
+    return this.intelligence_;
   }
 
   public void setIntelligence(int intelligence) {
