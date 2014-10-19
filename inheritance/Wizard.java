@@ -5,7 +5,7 @@ public class Wizard extends Adventurer {
   private Random rand_ = new Random();
 
   public Wizard() {
-    this("Tim");
+    this("Ryze");
   }
   
   public Wizard(String name) {
@@ -25,23 +25,28 @@ public class Wizard extends Adventurer {
   public void setMana(int mana) {
     this.mana_ = mana;
   }
-
-  public void attack(Adventurer target) {
-    int damage = rand_.nextInt(3);
-    target.setHP(target.getHP() - damage);
-    System.out.println(this.getName() + " dealt " + damage +
-        " damage to " + target.getName());
-    System.out.println(this);
-    System.out.println(target);
+  
+  public String getStats() {
+    return super.getStats() + "\tMana: " + this.getMana();
   }
   
   public void specialAttack(Adventurer target) {
     int damage = this.getINT() + 2 * rand_.nextInt(this.getINT());
-    target.setHP(target.getHP() - damage);
-    this.setMana(this.getMana() - damage);
-    System.out.println(this.getName() + " dealt " + damage +
-        " damage to " + target.getName());
-    System.out.println(this);
-    System.out.println(target);
+    if (damage > 0) {
+      if (this.getMana() > damage) {
+        target.setHP(target.getHP() - damage);
+        this.setMana(this.getMana() - damage);
+        System.out.println(this.getName() + " dealt " + damage +
+            " damage to " + target.getName() + " with a fireball.");
+        System.out.println(this.getStats());
+        System.out.println(target.getStats());
+      } else {
+        System.out.println(this + " does not have enough mana!");
+        this.attack(target);
+      }
+    } else {
+      System.out.println(this.getName() + " tried to blast " +
+          target.getName() + " but missed.");
+    }
   }
 }

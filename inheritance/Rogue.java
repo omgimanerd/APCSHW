@@ -5,7 +5,7 @@ public class Rogue extends Adventurer {
   private Random rand_ = new Random();
   
   public Rogue() {
-    this("Herpity derp");
+    this("Zed");
   }
   
   public Rogue(String name) {
@@ -24,27 +24,46 @@ public class Rogue extends Adventurer {
   public void setStamina(int stamina) {
     this.stamina_ = stamina;
   }
+  
+  public String getStats() {
+    return super.getStats() + "\tStamina: " + this.getStamina();
+  }
 
   public void attack(Adventurer target) {
     int damage = rand_.nextInt(this.getDEX());
-    target.setHP(target.getHP() - damage);
-    System.out.println(this.getName() + " dealt " + damage +
-        " damage to " + target.getName());
-    System.out.println(this);
-    System.out.println(target);
+    if (damage > 0) {
+      target.setHP(target.getHP() - damage);
+      System.out.println(this.getName() + " dealt " + damage +
+          " damage to " + target.getName());
+    } else {
+      System.out.println(this.getName() + " tried to stab " +
+          target.getName() + " but missed.");
+    }
+    System.out.println(this.getStats());
+    System.out.println(target.getStats());
   }
   
   public void specialAttack(Adventurer target) {
     int damage = this.getDEX() + rand_.nextInt(this.getDEX());
-    if (rand_.nextInt(50) < this.getDEX()) {
-      damage += 2 * this.getDEX();
+    if (damage > 0) {
+      if (this.getStamina() > damage) {
+        if (rand_.nextInt(50) < this.getDEX()) {
+          damage += 2 * this.getDEX();
+        }
+        target.setHP(target.getHP() - damage);
+        this.setStamina(this.getStamina() - 10);
+        System.out.println(this.getName() + " dealt " + damage +
+            " damage to " + target.getName() + " with a shuriken.");
+        System.out.println(this.getStats());
+        System.out.println(target.getStats());
+      } else {
+        System.out.println(this + " does not have enough stamina!");
+        this.attack(target);
+      }
+    } else {
+      System.out.println(this.getName() + " tried to assassinate " +
+          target.getName() + " but missed.");
     }
-    target.setHP(target.getHP() - damage);
-    this.setStamina(this.getStamina() - damage);
-    System.out.println(this.getName() + " dealt " + damage +
-        " damage to " + target.getName());
-    System.out.println(this);
-    System.out.println(target);
   }
   
 }
