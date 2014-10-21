@@ -19,12 +19,19 @@ public class Game {
     out("a. Wizard.");
     out("b. Warrior.");
     out("c. Rogue.");
+    out("d. Martial Artist.");
     
     // Allows the user to select a class to play as.
     String classSelect = "";
-    while (!classSelect.equals("a") && !classSelect.equals("b") && !classSelect.equals("c")) {
+    while (!classSelect.equals("a") &&
+        !classSelect.equals("b") &&
+        !classSelect.equals("c") &&
+        !classSelect.equals("d")) {
       classSelect = input.nextLine();
-      if (!classSelect.equals("a") && !classSelect.equals("b") && !classSelect.equals("c")) {
+      if (!classSelect.equals("a") &&
+          !classSelect.equals("b") &&
+          !classSelect.equals("c") &&
+          !classSelect.equals("d")) {
         out("Invalid selection.");
       }
     }
@@ -36,6 +43,7 @@ public class Game {
     // Generates the player with some random stats.
     int expendableStat = 25 + rand.nextInt(10);
     int powerStat = 5 + rand.nextInt(5);
+    int secondaryPowerStat = 5 + rand.nextInt(5);
     switch (classSelect) {
       case "a":
         player = new Wizard(playerName, expendableStat, powerStat);
@@ -48,13 +56,18 @@ public class Game {
       case "c":
         player = new Rogue(playerName, expendableStat, powerStat);
         out("Welcome to Stuyablo, Rogue " + playerName + ".");
+        break;
+      case "d":
+        player = new MartialArtist(playerName, expendableStat, powerStat, secondaryPowerStat);
+        out("Welcome to Stuyablo, Martial Artist " + playerName + ".");
     }
     
     // Randomly selects an opponent class.
     out("Your opponent has appeared.");
-    int opponentSelect = rand.nextInt(3);
+    int opponentSelect = rand.nextInt(4);
     int opponentExpendableStat = 25 + rand.nextInt(10);
     int opponentPowerStat = 5 + rand.nextInt(5);
+    int opponentSecondaryPowerStat = 5 + rand.nextInt(5);
     Adventurer opponent = null;
     switch (opponentSelect) {
       case 0:
@@ -68,6 +81,10 @@ public class Game {
       case 2:
         opponent = new Rogue("Akali", opponentExpendableStat, opponentPowerStat);
         out("You will now combat the Rogue " + opponent + ".");
+        break;
+      case 3:
+        opponent = new MartialArtist("Lee Sin", opponentExpendableStat,
+            opponentPowerStat, opponentSecondaryPowerStat);
     }
     
     // Determines whether the player or the opponent attacks first.
@@ -83,7 +100,6 @@ public class Game {
     } else {
       out("You shall attack your opponent first.");
     }
-    out(player.getStats());
     
     // Determines the action that the user will undertake.
     String choice = "";
@@ -111,8 +127,8 @@ public class Game {
           player.setHP(0);
       }
       
-      int ebolaChance = rand.nextInt(50);
-      if (ebolaChance > 5) {
+      int ebolaChance = rand.nextInt(100);
+      if (ebolaChance < 5) {
         out("You suddenly died from Ebola.");
         player.setHP(0);
       }

@@ -1,17 +1,6 @@
-import java.util.Random;
-
-public class Adventurer {
+public abstract class Adventurer {
   private String name_;
   private int HP_, STR_, DEX_, INT_;
-  private Random rand_ = new Random();
-  
-  public Adventurer() {
-    this("Lester");
-  }
-
-  public Adventurer(String name) {
-    this(name, 30, 0, 0, 0);
-  }
 
   public Adventurer(String name, int HP,
       int STR, int DEX, int INT) {
@@ -75,30 +64,10 @@ public class Adventurer {
   }
   
   public void attack(Adventurer target) {
-    int damage = rand_.nextInt(3);
-    if (damage > 0) {
-      target.setHP(target.getHP() - damage);
-      System.out.println(this.getName() + " dealt " + damage +
-          " damage to " + target.getName());  
-    } else {
-      System.out.println(this.getName() + " tried to hit " +
-          target.getName() + " but missed.");  
-    }
-    System.out.println(this.getStats());
-    System.out.println(target.getStats());
+    throw new Error("attack() method not overriden.");
   }
   
   public void specialAttack(Adventurer target) {
-    int damage = rand_.nextInt(7);
-    if (damage > 0) {
-      target.setHP(target.getHP() - damage);
-      System.out.println(this.getName() + " dealt " + damage +
-          " damage to " + target.getName() + "in a furious assault.");
-    } else {
-      System.out.println(this.getName() + " tried to murder " +
-          target.getName() + " but failed.");  
-    }
-    System.out.println(this.getStats());
-    System.out.println(target.getStats());
+    throw new Error("specialAttack() method not overriden.");
   }
 }

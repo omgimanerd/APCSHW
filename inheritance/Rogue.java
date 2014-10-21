@@ -47,11 +47,12 @@ public class Rogue extends Adventurer {
     int damage = this.getDEX() + rand_.nextInt(this.getDEX());
     if (damage > 0) {
       if (this.getStamina() > damage) {
+        this.setStamina(this.getStamina() - damage);
         if (rand_.nextInt(50) < this.getDEX()) {
-          damage += 2 * this.getDEX();
+          damage += 3 * this.getDEX();
+          System.out.println("Critical strike!");
         }
         target.setHP(target.getHP() - damage);
-        this.setStamina(this.getStamina() - 10);
         System.out.println(this.getName() + " dealt " + damage +
             " damage to " + target.getName() + " with a shuriken.");
         System.out.println(this.getStats());

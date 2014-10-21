@@ -30,6 +30,20 @@ public class Wizard extends Adventurer {
     return super.getStats() + "\tMana: " + this.getMana();
   }
   
+  public void attack(Adventurer target) {
+    int damage = rand_.nextInt(3);
+    if (damage > 0) {
+      target.setHP(target.getHP() - damage);
+      System.out.println(this.getName() + " dealt " + damage +
+          " damage to " + target.getName());  
+    } else {
+      System.out.println(this.getName() + " tried to hit " +
+          target.getName() + " but missed.");  
+    }
+    System.out.println(this.getStats());
+    System.out.println(target.getStats());
+  }
+  
   public void specialAttack(Adventurer target) {
     int damage = this.getINT() + 2 * rand_.nextInt(this.getINT());
     if (damage > 0) {
