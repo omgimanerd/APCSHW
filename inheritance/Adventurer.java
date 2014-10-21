@@ -1,6 +1,10 @@
 public abstract class Adventurer {
   private String name_;
   private int HP_, STR_, DEX_, INT_;
+  
+  public Adventurer(String name) {
+    this(name, 30, 0, 0, 0);
+  }
 
   public Adventurer(String name, int HP,
       int STR, int DEX, int INT) {
