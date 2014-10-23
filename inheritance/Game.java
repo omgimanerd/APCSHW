@@ -1,5 +1,4 @@
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
   
@@ -7,23 +6,23 @@ public class Game {
     System.out.println(str);
   }
   
-  public static void out(Adventurer adv) {
-    System.out.println(adv.toString());
+  public static void out(Adventurer adventurer) {
+    System.out.println(adventurer.toString());
   }
   
-  public static void main(String[] args) {
-    // Random number generator object.
+  public static Adventurer userSelectClass() {
     Random rand = new Random();
     Scanner input = new Scanner(System.in);
-    out("Select a class to play as.");
+    out("Select a class:");
     out("a. Wizard.");
     out("b. Warrior.");
     out("c. Rogue.");
     out("d. Martial Artist.");
     
-    // Allows the user to select a class to play as.
+    // Allows the user to select a class.
     String classSelect = "";
-    while (!classSelect.equals("a") &&
+    while (
+        !classSelect.equals("a") &&
         !classSelect.equals("b") &&
         !classSelect.equals("c") &&
         !classSelect.equals("d")) {
@@ -62,6 +61,12 @@ public class Game {
         out("Welcome to Stuyablo, Martial Artist " + playerName + ".");
     }
     
+    input.close();
+    return player;
+  }
+  
+  public static Adventurer randomSelectOpponentClass() {
+    Random rand = new Random();
     // Randomly selects an opponent class.
     out("Your opponent has appeared.");
     int opponentSelect = rand.nextInt(4);
@@ -87,6 +92,95 @@ public class Game {
             opponentPowerStat, opponentSecondaryPowerStat);
     }
     
+    return opponent;
+  }
+  
+  public static void playerCombat(Adventurer player, Adventurer[] opponents) {
+    Scanner input = new Scanner(System.in);
+    String userInput = "";
+    
+    out("Who will " + player + " attack?");
+    
+    while(!userInput.equals("") && opponents[Integer.parseInt(userInput)].getHP() < 0) {
+      userInput = input.nextLine();
+      if (opponents[Integer.parseInt(userInput)].getHP() < 0) {
+        out(opponents[Integer.parseInt(userInput)].toString() + "is already dead.");
+      }
+    }
+    
+    out("What shall you do?");
+    out("a. Attack");
+    out("b. Special Attack");
+    out("c. Commit suicide");
+
+    while (!userInput.equals("a") && !userInput.equals("b") && !userInput.equals("c")) {
+      userInput = input.nextLine();
+      if (!userInput.equals("a") && !userInput.equals("b") && !userInput.equals("c")) {
+        out("Invalid action.");
+      }
+    }
+    switch(userInput) {
+      case "a":
+        player.attack(opponents[Integer.parseInt(userInput)]);
+        break;
+      case "b":
+        player.specialAttack(opponents[Integer.parseInt(userInput)]);
+        break;
+      case "c":
+        player.setHP(0);
+    }
+    input.close();
+  }
+  
+  public static void opponentCombat(Adventurer opponent, Adventurer[] players) {
+    Random rand = new Random();
+    
+    for (int i = 0; i < players.length; ++i) {
+      if (players[i].getHP() > 0) {
+        boolean action = rand.nextBoolean();
+        if (action) {
+          opponent.specialAttack(players[i]);
+        } else {
+          opponent.attack(players[i]);
+        }
+        return;
+      }
+    }
+  }
+  
+  public static void outputLivingCombatants(Adventurer[] players, Adventurer[] opponents) {
+    out("Your party:");
+    for (int i = 0; i < players.length; ++i) {
+      if (players[i].getHP() > 0) {
+        out(players[i]);
+      }
+    }
+    out("Opponents:");
+    for (int i = 0; i < opponents.length; ++i) {
+      if (opponents[i].getHP() > 0) {
+        out(opponents[i]);
+      }
+    }
+  }
+  
+  public static void main(String[] args) {
+    Random rand = new Random();
+    Scanner input = new Scanner(System.in);
+    
+    out("Welcome to Stuyablo, create a party of 3.");
+    
+    Adventurer[] playerParty = new Adventurer[3];
+    for (int i = 0; i < playerParty.length; ++i) {
+      playerParty[i] = userSelectClass();
+      out(playerParty[i] + " has joined your party.");
+    }
+    
+    Adventurer[] opponentParty = new Adventurer[3];
+    for (int i = 0; i < opponentParty.length; ++i) {
+      opponentParty[i] = randomSelectOpponentClass();
+      out("You will fight " + opponentParty[i]);
+    }
+    
     // Determines whether the player or the opponent attacks first.
     boolean turn = rand.nextBoolean();
     if (turn) {
@@ -102,36 +196,7 @@ public class Game {
     }
     
     // Determines the action that the user will undertake.
-    String choice = "";
     while(player.getHP() > 0 && opponent.getHP() > 0) {
-      out("What shall you do?");
-      out("a. Attack.");
-      out("b. Special Attack");
-      out("c. Surrender");
-      
-      while (!choice.equals("a") && !choice.equals("b") && !choice.equals("c")) {
-        choice = input.nextLine();
-        if (!choice.equals("a") && !choice.equals("b") && !choice.equals("c")) {
-          out("Invalid action.");
-        }
-      }
-      
-      switch(choice) {
-        case "a":
-          player.attack(opponent);
-          break;
-        case "b":
-          player.specialAttack(opponent);
-          break;
-        case "c":
-          player.setHP(0);
-      }
-      
-      int ebolaChance = rand.nextInt(100);
-      if (ebolaChance < 5) {
-        out("You suddenly died from Ebola.");
-        player.setHP(0);
-      }
       
       // Loop will exit if either player has already died.
       if (opponent.getHP() <= 0 || player.getHP() <= 0) {
