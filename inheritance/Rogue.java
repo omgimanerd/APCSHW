@@ -39,8 +39,6 @@ public class Rogue extends Adventurer {
       System.out.println(this.getName() + " tried to stab " +
           target.getName() + " but missed.");
     }
-    System.out.println(this.getStats());
-    System.out.println(target.getStats());
   }
   
   public void specialAttack(Adventurer target) {
@@ -55,8 +53,6 @@ public class Rogue extends Adventurer {
         target.setHP(target.getHP() - damage);
         System.out.println(this.getName() + " dealt " + damage +
             " damage to " + target.getName() + " with a shuriken.");
-        System.out.println(this.getStats());
-        System.out.println(target.getStats());
       } else {
         System.out.println(this + " does not have enough stamina!");
         this.attack(target);

@@ -41,8 +41,6 @@ public class MartialArtist extends Adventurer {
       System.out.println(this.getName() + " tried to punch " +
           target.getName() + " but missed.");
     }
-    System.out.println(this.getStats());
-    System.out.println(target.getStats());
   }
   
   public void specialAttack(Adventurer target) {
@@ -57,8 +55,6 @@ public class MartialArtist extends Adventurer {
         target.setHP(target.getHP() - damage);
         System.out.println(this.getName() + " dealt " + damage +
             " damage to " + target.getName() + " by yelling Hadouken.");
-        System.out.println(this.getStats());
-        System.out.println(target.getStats());
       } else {
         System.out.println(this + " does not have enough qi!");
         this.attack(target);

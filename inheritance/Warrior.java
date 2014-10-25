@@ -40,8 +40,6 @@ public class Warrior extends Adventurer {
       System.out.println(this.getName() + " tried to hit " +
           target.getName() + " but missed.");
     }
-    System.out.println(this.getStats());
-    System.out.println(target.getStats());
   }
   
   public void specialAttack(Adventurer target) {
@@ -52,8 +50,6 @@ public class Warrior extends Adventurer {
         this.setRage(this.getRage() - damage);
         System.out.println(this.getName() + " dealt " + damage +
             " damage to " + target.getName() + " with a furious chop.");
-        System.out.println(this.getStats());
-        System.out.println(target.getStats());
       } else {
         System.out.println(this + " does not have enough rage!");
         this.attack(target);

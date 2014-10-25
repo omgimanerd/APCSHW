@@ -40,8 +40,6 @@ public class Wizard extends Adventurer {
       System.out.println(this.getName() + " tried to hit " +
           target.getName() + " but missed.");  
     }
-    System.out.println(this.getStats());
-    System.out.println(target.getStats());
   }
   
   public void specialAttack(Adventurer target) {
@@ -52,8 +50,6 @@ public class Wizard extends Adventurer {
         this.setMana(this.getMana() - damage);
         System.out.println(this.getName() + " dealt " + damage +
             " damage to " + target.getName() + " with a fireball.");
-        System.out.println(this.getStats());
-        System.out.println(target.getStats());
       } else {
         System.out.println(this + " does not have enough mana!");
         this.attack(target);

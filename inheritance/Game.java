@@ -12,6 +12,7 @@ public class Game {
   
   public static Adventurer userSelectClass() {
     Random rand = new Random();
+    @SuppressWarnings("resource")
     Scanner input = new Scanner(System.in);
     out("Select a class:");
     out("a. Wizard.");
@@ -46,29 +47,27 @@ public class Game {
     switch (classSelect) {
       case "a":
         player = new Wizard(playerName, expendableStat, powerStat);
-        out("Welcome to Stuyablo, Wizard " + playerName + ".");
+        out("Wizard " + playerName + " has joined your party.");
         break;
       case "b":
         player = new Warrior(playerName, expendableStat, powerStat);
-        out("Welcome to Stuyablo, Warrior " + playerName + ".");
+        out("Warrior " + playerName + " has joined your party.");
         break;
       case "c":
         player = new Rogue(playerName, expendableStat, powerStat);
-        out("Welcome to Stuyablo, Rogue " + playerName + ".");
+        out("Rogue " + playerName + " has joined your party.");
         break;
       case "d":
         player = new MartialArtist(playerName, expendableStat, powerStat, secondaryPowerStat);
-        out("Welcome to Stuyablo, Martial Artist " + playerName + ".");
+        out("Martial Artist " + playerName + " has joined your party.");
     }
     
-    input.close();
     return player;
   }
   
   public static Adventurer randomSelectOpponentClass() {
     Random rand = new Random();
     // Randomly selects an opponent class.
-    out("Your opponent has appeared.");
     int opponentSelect = rand.nextInt(4);
     int opponentExpendableStat = 25 + rand.nextInt(10);
     int opponentPowerStat = 5 + rand.nextInt(5);
@@ -77,34 +76,44 @@ public class Game {
     switch (opponentSelect) {
       case 0:
         opponent = new Wizard("Xerath", opponentExpendableStat, opponentPowerStat);
-        out("You will now combat the Wizard " + opponent + ".");
+        out("You will combat the Wizard " + opponent + ".");
         break;
       case 1:
         opponent = new Warrior("Darius", opponentExpendableStat, opponentPowerStat);
-        out("You will now combat the Warrior " + opponent + ".");
+        out("You will combat the Warrior " + opponent + ".");
         break;
       case 2:
         opponent = new Rogue("Akali", opponentExpendableStat, opponentPowerStat);
-        out("You will now combat the Rogue " + opponent + ".");
+        out("You will combat the Rogue " + opponent + ".");
         break;
       case 3:
         opponent = new MartialArtist("Lee Sin", opponentExpendableStat,
             opponentPowerStat, opponentSecondaryPowerStat);
+        out("You will combat the Martial Artist " + opponent + ".");
     }
     
     return opponent;
   }
   
   public static void playerCombat(Adventurer player, Adventurer[] opponents) {
+    @SuppressWarnings("resource")
     Scanner input = new Scanner(System.in);
-    String userInput = "";
     
+    String target = "";
     out("Who will " + player + " attack?");
+    String selectionTitle = "abc";
+    for (int i = 0; i < opponents.length; ++i) {
+      System.out.println(selectionTitle.charAt(i) + ". " + opponents[i].getStats());
+    }
     
-    while(!userInput.equals("") && opponents[Integer.parseInt(userInput)].getHP() < 0) {
-      userInput = input.nextLine();
-      if (opponents[Integer.parseInt(userInput)].getHP() < 0) {
-        out(opponents[Integer.parseInt(userInput)].toString() + "is already dead.");
+    while (!target.equals("a") && !target.equals("b") && !target.equals("c")) {
+      target = input.nextLine();
+      if (target.equals("a") || target.equals("b") || target.equals("c")) {
+        if (opponents[selectionTitle.indexOf(target)].getHP() <= 0) {
+          out(opponents[selectionTitle.indexOf(target)].toString() + " is already dead.");
+          out("Select another target.");
+          target = "";
+        }
       }
     }
     
@@ -113,23 +122,23 @@ public class Game {
     out("b. Special Attack");
     out("c. Commit suicide");
 
-    while (!userInput.equals("a") && !userInput.equals("b") && !userInput.equals("c")) {
-      userInput = input.nextLine();
-      if (!userInput.equals("a") && !userInput.equals("b") && !userInput.equals("c")) {
+    String action = "";
+    while (!action.equals("a") && !action.equals("b") && !action.equals("c")) {
+      action = input.nextLine();
+      if (!action.equals("a") && !action.equals("b") && !action.equals("c")) {
         out("Invalid action.");
       }
     }
-    switch(userInput) {
+    switch(action) {
       case "a":
-        player.attack(opponents[Integer.parseInt(userInput)]);
+        player.attack(opponents[selectionTitle.indexOf(target)]);
         break;
       case "b":
-        player.specialAttack(opponents[Integer.parseInt(userInput)]);
+        player.specialAttack(opponents[selectionTitle.indexOf(target)]);
         break;
       case "c":
         player.setHP(0);
     }
-    input.close();
   }
   
   public static void opponentCombat(Adventurer opponent, Adventurer[] players) {
@@ -152,16 +161,24 @@ public class Game {
     out("Your party:");
     for (int i = 0; i < players.length; ++i) {
       if (players[i].getHP() > 0) {
-        out(players[i]);
+        out(players[i].getStats());
       }
     }
     out("Opponents:");
     for (int i = 0; i < opponents.length; ++i) {
       if (opponents[i].getHP() > 0) {
-        out(opponents[i]);
+        out(opponents[i].getStats());
       }
     }
   }
+  
+  public static boolean isGroupAlive(Adventurer[] group) {
+    boolean[] status = new boolean[3];
+    for (int i = 0; i < group.length; ++i) {
+      status[i] = group[i].getHP() > 0;
+    }
+    return status[0] || status[1] || status[2];
+  }  
   
   public static void main(String[] args) {
     Random rand = new Random();
@@ -172,50 +189,52 @@ public class Game {
     Adventurer[] playerParty = new Adventurer[3];
     for (int i = 0; i < playerParty.length; ++i) {
       playerParty[i] = userSelectClass();
-      out(playerParty[i] + " has joined your party.");
     }
     
+    out("Your opponents have appeared.");
     Adventurer[] opponentParty = new Adventurer[3];
     for (int i = 0; i < opponentParty.length; ++i) {
       opponentParty[i] = randomSelectOpponentClass();
-      out("You will fight " + opponentParty[i]);
     }
     
     // Determines whether the player or the opponent attacks first.
     boolean turn = rand.nextBoolean();
     if (turn) {
-      out("Your opponent attacked you first.");
-      boolean attacktype = rand.nextBoolean();
-      if (attacktype) {
-        opponent.attack(player);
-      } else {
-        opponent.specialAttack(player);
+      out("Your opponents attacked you first.");
+      for (int i = 0; i < opponentParty.length; ++i) {
+        if (opponentParty[i].getHP() > 0) {
+          opponentCombat(opponentParty[i], playerParty);
+        }
       }
     } else {
-      out("You shall attack your opponent first.");
+      out("You shall attack your opponents first.");
     }
     
     // Determines the action that the user will undertake.
-    while(player.getHP() > 0 && opponent.getHP() > 0) {
-      
-      // Loop will exit if either player has already died.
-      if (opponent.getHP() <= 0 || player.getHP() <= 0) {
-        break;
+    while (isGroupAlive(playerParty) && isGroupAlive(opponentParty)) {
+      // Handle player combat.
+      for (int i = 0; i < playerParty.length; ++i) {
+        if (playerParty[i].getHP() > 0) {
+          playerCombat(playerParty[i], opponentParty);
+          outputLivingCombatants(playerParty, opponentParty);
+        }
       }
       
-      boolean opponentAction = rand.nextBoolean();
-      if (opponentAction) {
-        opponent.specialAttack(player);
-      } else {
-        opponent.attack(player);
+      out("Your opponents' turn!");
+      
+      // Handle opponent retaliation.
+      for (int i = 0; i < opponentParty.length; ++i) {
+        if (opponentParty[i].getHP() > 0) {
+          opponentCombat(opponentParty[i], playerParty);
+          outputLivingCombatants(playerParty, opponentParty);
+        }
       }
       
-      // Resets the choice string to allow the next action to be read.
-      choice = "";
+      out("Your turn!");
     }
   
     // Outputs the state of the battle.
-    if (player.getHP() <= 0) {
+    if (!isGroupAlive(playerParty)) {
       out("You lose the battle.");
     } else {
       out("You win the battle.");
