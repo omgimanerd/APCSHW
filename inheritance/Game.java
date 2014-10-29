@@ -58,7 +58,8 @@ public class Game {
         out("Rogue " + playerName + " has joined your party.");
         break;
       case "d":
-        player = new MartialArtist(playerName, expendableStat, powerStat, secondaryPowerStat);
+        player = new MartialArtist(playerName, expendableStat, powerStat,
+                                   secondaryPowerStat);
         out("Martial Artist " + playerName + " has joined your party.");
     }
     
@@ -75,20 +76,23 @@ public class Game {
     Adventurer opponent = null;
     switch (opponentSelect) {
       case 0:
-        opponent = new Wizard("Xerath", opponentExpendableStat, opponentPowerStat);
+        opponent = new Wizard("Xerath", opponentExpendableStat,
+                              opponentPowerStat);
         out("You will combat the Wizard " + opponent + ".");
         break;
       case 1:
-        opponent = new Warrior("Darius", opponentExpendableStat, opponentPowerStat);
+        opponent = new Warrior("Darius", opponentExpendableStat,
+                               opponentPowerStat);
         out("You will combat the Warrior " + opponent + ".");
         break;
       case 2:
-        opponent = new Rogue("Akali", opponentExpendableStat, opponentPowerStat);
+        opponent = new Rogue("Akali", opponentExpendableStat,
+                             opponentPowerStat);
         out("You will combat the Rogue " + opponent + ".");
         break;
       case 3:
         opponent = new MartialArtist("Lee Sin", opponentExpendableStat,
-            opponentPowerStat, opponentSecondaryPowerStat);
+                                     opponentPowerStat, opponentSecondaryPowerStat);
         out("You will combat the Martial Artist " + opponent + ".");
     }
     
@@ -110,7 +114,8 @@ public class Game {
       target = input.nextLine();
       if (target.equals("a") || target.equals("b") || target.equals("c")) {
         if (opponents[selectionTitle.indexOf(target)].getHP() <= 0) {
-          out(opponents[selectionTitle.indexOf(target)].toString() + " is already dead.");
+          out(opponents[selectionTitle.indexOf(target)].toString() +
+              " is already dead.");
           out("Select another target.");
           target = "";
         }
@@ -157,7 +162,8 @@ public class Game {
     }
   }
   
-  public static void outputLivingCombatants(Adventurer[] players, Adventurer[] opponents) {
+  public static void outputLivingCombatants(Adventurer[] players,
+                                            Adventurer[] opponents) {
     out("Your party:");
     for (int i = 0; i < players.length; ++i) {
       if (players[i].getHP() > 0) {
