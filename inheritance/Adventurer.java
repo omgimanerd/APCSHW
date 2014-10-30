@@ -1,18 +1,18 @@
 public abstract class Adventurer {
   private String name_;
-  private int HP_, STR_, DEX_, INT_;
-  
+  private int HP_, STR_, DEX_, INT_, expendableStat_;
+
   public Adventurer(String name) {
-    this(name, 30, 0, 0, 0);
+    this(name, 75, 10, 10, 10, 40);
   }
 
-  public Adventurer(String name, int HP,
-      int STR, int DEX, int INT) {
+  public Adventurer(String name, int HP, int STR, int DEX, int INT, int expendableStat) {
     this.setName(name);
     this.setHP(HP);
     this.setSTR(STR);
     this.setDEX(DEX);
     this.setINT(INT);
+    this.setExpendableStat(expendableStat);
   }
 
   public String getName() {
@@ -55,22 +55,27 @@ public abstract class Adventurer {
     this.INT_ = INT;
   }
 
+  public int getExpendableStat() {
+    return this.expendableStat_;
+  }
+
+  public void setExpendableStat(int expendableStat) {
+    this.expendableStat_ = expendableStat;
+  }
+
   public String toString() {
     return getName();
   }
-  
+
   public String getStats() {
-    return this.getName() + 
-        "\tHP: " + this.getHP() +
-        "\tSTR: " + this.getSTR() +
-        "\tDEX: " + this.getDEX() +
-        "\tINT: " + this.getINT();
+    return this.getName() + "\tHP: " + this.getHP() + "\tSTR: " + this.getSTR()
+        + "\tDEX: " + this.getDEX() + "\tINT: " + this.getINT();
   }
-  
+
   public void attack(Adventurer target) {
     throw new Error("attack() method not overriden.");
   }
-  
+
   public void specialAttack(Adventurer target) {
     throw new Error("specialAttack() method not overriden.");
   }

@@ -1,7 +1,6 @@
 import java.util.Random;
 
 public class Warrior extends Adventurer {
-  private int rage_;
   private Random rand_ = new Random();
 
   public Warrior() {
@@ -9,29 +8,15 @@ public class Warrior extends Adventurer {
   }
 
   public Warrior(String name) {
-    this(name, 30, 5);
-  }
-
-  public Warrior(String name, int rage, int STR) {
     super(name);
-    this.setRage(rage);
-    this.setSTR(STR);
-  }
-  
-  public int getRage() {
-    return rage_;
-  }
-
-  public void setRage(int rage) {
-    this.rage_ = rage;
   }
   
   public String getStats() {
-    return super.getStats() + "\tRage: " + this.getRage();
+    return super.getStats() + "\tRage: " + this.getExpendableStat();
   }
 
   public void attack(Adventurer target) {
-    int damage = rand_.nextInt(this.getSTR());
+    int damage = rand_.nextInt(this.getSTR() + 5);
     if (damage > 0) {
       target.setHP(target.getHP() - damage);
       System.out.println(this.getName() + " dealt " + damage +
@@ -43,11 +28,15 @@ public class Warrior extends Adventurer {
   }
   
   public void specialAttack(Adventurer target) {
-    int damage = this.getSTR() + rand_.nextInt(this.getSTR());
+    int damage = this.getSTR() + rand_.nextInt(this.getDEX() + 5);
     if (damage > 0) {
-      if (this.getRage() > damage) {
+      if (this.getExpendableStat() > damage) {
+        this.setExpendableStat(this.getExpendableStat() - damage);
+        if (rand_.nextInt(40) <= this.getDEX()) {
+          damage += this.getDEX();
+          System.out.println("Critical strike!");
+        }
         target.setHP(target.getHP() - damage);
-        this.setRage(this.getRage() - damage);
         System.out.println(this.getName() + " dealt " + damage +
             " damage to " + target.getName() + " with a furious chop.");
       } else {
@@ -58,9 +47,5 @@ public class Warrior extends Adventurer {
       System.out.println(this.getName() + " tried to decapitate " +
           target.getName() + " but missed.");
     }
-  }
-  
-  public String warcry() {
-    return "DEMACIA!";
   }
 }

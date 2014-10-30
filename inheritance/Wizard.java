@@ -1,7 +1,6 @@
 import java.util.Random;
 
 public class Wizard extends Adventurer {
-  private int mana_;
   private Random rand_ = new Random();
 
   public Wizard() {
@@ -9,33 +8,19 @@ public class Wizard extends Adventurer {
   }
   
   public Wizard(String name) {
-    this(name, 30, 5);
-  }
-  
-  public Wizard(String name, int mana, int INT) {
     super(name);
-    this.setMana(mana);
-    this.setINT(INT);
-  }
-  
-  public int getMana() {
-    return this.mana_;
-  }
-
-  public void setMana(int mana) {
-    this.mana_ = mana;
   }
   
   public String getStats() {
-    return super.getStats() + "\tMana: " + this.getMana();
+    return super.getStats() + "\tMana: " + this.getExpendableStat();
   }
   
   public void attack(Adventurer target) {
-    int damage = rand_.nextInt(3);
+    int damage = rand_.nextInt(5);
     if (damage > 0) {
       target.setHP(target.getHP() - damage);
       System.out.println(this.getName() + " dealt " + damage +
-          " damage to " + target.getName());  
+          " damage to " + target.getName() + " with a blast of mc^2");  
     } else {
       System.out.println(this.getName() + " tried to hit " +
           target.getName() + " but missed.");  
@@ -43,11 +28,15 @@ public class Wizard extends Adventurer {
   }
   
   public void specialAttack(Adventurer target) {
-    int damage = this.getINT() + 2 * rand_.nextInt(this.getINT());
+    int damage = rand_.nextInt(this.getINT() + 5) + rand_.nextInt(this.getINT() + 5);
     if (damage > 0) {
-      if (this.getMana() > damage) {
+      if (this.getExpendableStat() > damage) {
+        this.setExpendableStat(this.getExpendableStat() - damage);
+        if (rand_.nextInt(100) <= this.getINT()) {
+          damage += this.getINT();
+          System.out.println("Critical blast!");
+        }
         target.setHP(target.getHP() - damage);
-        this.setMana(this.getMana() - damage);
         System.out.println(this.getName() + " dealt " + damage +
             " damage to " + target.getName() + " with a fireball.");
       } else {

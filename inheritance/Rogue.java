@@ -1,40 +1,26 @@
 import java.util.Random;
 
 public class Rogue extends Adventurer {
-  private int stamina_;
   private Random rand_ = new Random();
   
   public Rogue() {
     this("Zed");
   }
-  
-  public Rogue(String name) {
-    this(name, 30, 5);
-  }
-  
-  public Rogue(String name, int stamina, int DEX) {
-    super(name);
-    this.setStamina(stamina);
-    this.setDEX(DEX);
-  }
-  public int getStamina() {
-    return this.stamina_;
-  }
 
-  public void setStamina(int stamina) {
-    this.stamina_ = stamina;
+  public Rogue(String name) {
+    super(name);
   }
   
   public String getStats() {
-    return super.getStats() + "\tStamina: " + this.getStamina();
+    return super.getStats() + "\tStamina: " + this.getExpendableStat();
   }
 
   public void attack(Adventurer target) {
-    int damage = rand_.nextInt(this.getDEX());
+    int damage = rand_.nextInt(this.getDEX() + 5) + rand_.nextInt(this.getSTR() + 5);
     if (damage > 0) {
       target.setHP(target.getHP() - damage);
       System.out.println(this.getName() + " dealt " + damage +
-          " damage to " + target.getName());
+          " damage to " + target.getName() + " with a sharp stab.");
     } else {
       System.out.println(this.getName() + " tried to stab " +
           target.getName() + " but missed.");
@@ -42,12 +28,12 @@ public class Rogue extends Adventurer {
   }
   
   public void specialAttack(Adventurer target) {
-    int damage = this.getDEX() + rand_.nextInt(this.getDEX());
+    int damage = rand_.nextInt(this.getDEX() + 5) + rand_.nextInt(this.getDEX() + 5);
     if (damage > 0) {
-      if (this.getStamina() > damage) {
-        this.setStamina(this.getStamina() - damage);
-        if (rand_.nextInt(40) < this.getDEX()) {
-          damage += 3 * this.getDEX();
+      if (this.getExpendableStat() > damage) {
+        this.setExpendableStat(this.getExpendableStat() - damage);
+        if (rand_.nextInt(70) <= this.getDEX()) {
+          damage += this.getDEX();
           System.out.println("Critical strike!");
         }
         target.setHP(target.getHP() - damage);
