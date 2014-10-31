@@ -103,34 +103,29 @@ public class Game {
     for (int i = 0; i < amount; ++i) {
       // Randomly selects an opponent class.
       int opponentSelect = rand.nextInt(4);
-      int opponentExpendableStat = 35 + rand.nextInt(10);
-      int opponentPowerStat = 25 + rand.nextInt(5);
+      int opponentPowerStat = 20 + rand.nextInt(11);
       int opponentSecondaryPowerStat = 30 - opponentPowerStat;
       switch (opponentSelect) {
         case 0:
           opponents[i] = new Wizard("Xerath");
-          opponents[i].setExpendableStat(opponentExpendableStat);
           opponents[i].setINT(opponentPowerStat);
           opponents[i].setSTR(opponentSecondaryPowerStat);
           out("You will combat the Wizard " + opponents[i] + ".");
           break;
         case 1:
           opponents[i] = new Warrior("Darius");
-          opponents[i].setExpendableStat(opponentExpendableStat);
           opponents[i].setSTR(opponentPowerStat);
           opponents[i].setDEX(opponentSecondaryPowerStat);
           out("You will combat the Warrior " + opponents[i] + ".");
           break;
         case 2:
           opponents[i] = new Rogue("Akali");
-          opponents[i].setExpendableStat(opponentExpendableStat);
           opponents[i].setDEX(opponentPowerStat);
           opponents[i].setSTR(opponentSecondaryPowerStat);
           out("You will combat the Rogue " + opponents[i] + ".");
           break;
         case 3:
           opponents[i] = new MartialArtist("Lee Sin");
-          opponents[i].setExpendableStat(opponentExpendableStat);
           opponents[i].setSTR(opponentPowerStat);
           opponents[i].setDEX(opponentSecondaryPowerStat);
           out("You will combat the Martial Artist " + opponents[i] + ".");
@@ -245,11 +240,10 @@ public class Game {
     return false;
   }
 
-  @SuppressWarnings("unused")
+  @SuppressWarnings("resource")
   public static void main(String[] args) {
     Random rand = new Random();
     Scanner input = new Scanner(System.in);
-    String buffer = "";
     Adventurer[] playerParty = null;
     Adventurer[] opponentParty = null;
 
@@ -284,8 +278,7 @@ public class Game {
       // Determines whether the player or the opponent attacks first.
       boolean turn = rand.nextBoolean();
       if (turn) {
-        out("Your opponents will attack first. Enter anything to continue.");
-        buffer = input.nextLine();
+        out("Your opponents will attack first.");
         for (int i = 0; i < opponentParty.length; ++i) {
           if (opponentParty[i].getHP() > 0) {
             opponentCombat(opponentParty[i], playerParty);
@@ -309,8 +302,7 @@ public class Game {
         if (!isGroupAlive(playerParty) || !isGroupAlive(opponentParty)) {
           break;
         }
-        out("Your opponents' turn! Enter anything to continue.");
-        buffer = input.nextLine();
+        out("Your opponents' turn!");
 
         // Handle opponent retaliation.
         for (int i = 0; i < opponentParty.length; ++i) {
@@ -331,7 +323,7 @@ public class Game {
         out("Your party has died, you lose the battle.");
         fighting = false;
       } else {
-        out("You win the battle. Would you like to fite another buncha dudes? [y/n]");
+        out("You win the battle. Ye wanna fite another buncha dudes? [y/n]");
         String fight = input.nextLine();
         while (!fight.equalsIgnoreCase("y") && !fight.equalsIgnoreCase("n")) {
           out("Invalid selection.");
@@ -347,6 +339,7 @@ public class Game {
           }
         } else {
           out("Denks for pleying.");
+          return;
         }
       }
     }
