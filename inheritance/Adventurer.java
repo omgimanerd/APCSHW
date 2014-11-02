@@ -3,7 +3,7 @@ public abstract class Adventurer {
   private int HP_, STR_, DEX_, INT_, expendableStat_;
 
   public Adventurer(String name) {
-    this(name, 75, 10, 10, 10, 40);
+    this(name, 75, 10, 10, 10, 75);
   }
 
   public Adventurer(String name, int HP, int STR, int DEX, int INT, int expendableStat) {
@@ -72,11 +72,11 @@ public abstract class Adventurer {
         + "\tDEX: " + this.getDEX() + "\tINT: " + this.getINT();
   }
 
-  public void attack(Adventurer target) {
+  public String attack(Adventurer target) {
     throw new Error("attack() method not overriden.");
   }
 
-  public void specialAttack(Adventurer target) {
+  public String specialAttack(Adventurer target) {
     throw new Error("specialAttack() method not overriden.");
   }
 }

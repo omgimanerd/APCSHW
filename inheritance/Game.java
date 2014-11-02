@@ -2,14 +2,30 @@ import java.util.*;
 
 public class Game {
 
+  public static void pause (int ms) {
+    try {
+      Thread.sleep(ms);
+    } catch (Exception e) {}
+  }
+  
+  public static void flushDisplay () {
+    for (int i = 0; i < 30; ++i) {
+      System.out.print("\n");
+    }
+  }
+  
   public static void out(String str) {
-    System.out.println(str);
+    for (int i = 0; i < str.length(); ++i) {
+      System.out.print(str.charAt(i));
+      pause(5);
+    }
+    System.out.print("\n");
   }
 
   public static void out(Adventurer adventurer) {
-    System.out.println(adventurer.toString());
+    out(adventurer.toString());
   }
-
+  
   public static int[] userSelectStats() {
     @SuppressWarnings("resource")
     Scanner input = new Scanner(System.in);
@@ -21,6 +37,14 @@ public class Game {
       out("Bro, dat ain't a valid STR.");
       stats[0] = input.nextInt();
     }
+    if (stats[0] == 30) {
+      out("Very well, that means this fine fellow will receive no DEX or INT.");
+      out("\n");
+      stats[1] = 0;
+      stats[2] = 0;
+      return stats;
+    }
+    
     out("Jolly good, now pray tell the exacting amount of DEX that this fine "
         + "Adventurer should possess. " + (30 - stats[0])
         + " points remaining.");
@@ -30,8 +54,10 @@ public class Game {
           + (30 - stats[0]) + "points remaining");
       stats[1] = input.nextInt();
     }
+    
     stats[2] = 30 - (stats[0] + stats[1]);
-    out("Aight bro, then the dude finna get " + stats[2] + " INT.");
+    out("Aight bro, then the dude's gonna get " + stats[2] + " INT.");
+    out("\n");
 
     return stats;
   }
@@ -84,7 +110,7 @@ public class Game {
           players[i] = new MartialArtist(playerName);
           out("Martial Artist " + playerName + " has joined your party.");
       }
-
+      
       // Takes in stats.
       int[] stats = userSelectStats();
       players[i].setSTR(stats[0]);
@@ -147,7 +173,7 @@ public class Game {
     out("Who will " + player + " attack?");
     String selectionTitle = "abc";
     for (int i = 0; i < opponents.length; ++i) {
-      System.out.println(selectionTitle.charAt(i) + ". "
+      out(selectionTitle.charAt(i) + ". "
           + opponents[i].getStats());
     }
 
@@ -184,14 +210,17 @@ public class Game {
     }
     switch (action) {
       case "a":
-        player.attack(opponents[selectionTitle.indexOf(target)]);
+        out(player.attack(opponents[selectionTitle.indexOf(target)]));
         break;
       case "b":
-        player.specialAttack(opponents[selectionTitle.indexOf(target)]);
+        out(player.specialAttack(opponents[selectionTitle.indexOf(target)]));
         break;
       case "c":
         player.setHP(0);
     }
+    
+    pause(4000);
+    flushDisplay();
   }
 
   public static void opponentCombat(Adventurer opponent, Adventurer[] players) {
@@ -208,10 +237,13 @@ public class Game {
 
     boolean action = rand.nextBoolean();
     if (action) {
-      opponent.specialAttack(players[querySelection]);
+      out(opponent.specialAttack(players[querySelection]));
     } else {
-      opponent.attack(players[querySelection]);
+      out(opponent.attack(players[querySelection]));
     }
+    
+    pause(4000);
+    flushDisplay();
   }
 
   public static void outputLivingCombatants(Adventurer[] players,
@@ -247,13 +279,15 @@ public class Game {
     Adventurer[] playerParty = null;
     Adventurer[] opponentParty = null;
 
+    flushDisplay();
     out("Welcome to Stuyablo, do you want to customize a party? [y/n]");
     String customize = input.nextLine();
     while (!customize.equalsIgnoreCase("y") && !customize.equalsIgnoreCase("n")) {
       out("Invalid selection.");
       customize = input.nextLine();
     }
-
+    flushDisplay();
+    
     if (customize.equalsIgnoreCase("y")) {
       out("How large is yer party? Maximum of 5.");
       int partySize = input.nextInt();
@@ -262,6 +296,7 @@ public class Game {
         partySize = input.nextInt();
       }
       playerParty = userSelectPlayers(partySize);
+      flushDisplay();
       opponentParty = randomSelectOpponents(partySize);
     } else {
       out("Default party created.");
@@ -271,31 +306,38 @@ public class Game {
       playerParty[2] = new Rogue();
       opponentParty = randomSelectOpponents(3);
     }
-
+    outputLivingCombatants(playerParty, opponentParty);
+    pause(5000);
+    
+    // Determines whether the player or the opponent attacks first.
+    boolean turn = rand.nextBoolean();
+    if (turn) {
+      out("Your opponents will attack first.");
+      pause(2000);
+      flushDisplay();
+      for (int i = 0; i < opponentParty.length; ++i) {
+        if (opponentParty[i].getHP() > 0) {
+          outputLivingCombatants(playerParty, opponentParty);
+          opponentCombat(opponentParty[i], playerParty);
+        }
+      }
+      out("Your turn!");
+      pause(2000);
+    } else {
+      out("You shall attack your opponents first.");
+      pause(2000);
+      flushDisplay();
+    }
+    
     boolean fighting = true;
     while (fighting) {
-      outputLivingCombatants(playerParty, opponentParty);
-      // Determines whether the player or the opponent attacks first.
-      boolean turn = rand.nextBoolean();
-      if (turn) {
-        out("Your opponents will attack first.");
-        for (int i = 0; i < opponentParty.length; ++i) {
-          if (opponentParty[i].getHP() > 0) {
-            opponentCombat(opponentParty[i], playerParty);
-            outputLivingCombatants(playerParty, opponentParty);
-          }
-        }
-      } else {
-        out("You shall attack your opponents first.");
-      }
-
       // Determines the action that the user will undertake.
       while (isGroupAlive(playerParty) && isGroupAlive(opponentParty)) {
         // Handle player combat.
         for (int i = 0; i < playerParty.length; ++i) {
           if (playerParty[i].getHP() > 0) {
-            playerCombat(playerParty[i], opponentParty);
             outputLivingCombatants(playerParty, opponentParty);
+            playerCombat(playerParty[i], opponentParty);
           }
         }
 
@@ -303,19 +345,21 @@ public class Game {
           break;
         }
         out("Your opponents' turn!");
+        pause(2000);
 
         // Handle opponent retaliation.
         for (int i = 0; i < opponentParty.length; ++i) {
           if (opponentParty[i].getHP() > 0) {
+            outputLivingCombatants(playerParty, opponentParty);
             opponentCombat(opponentParty[i], playerParty);
           }
         }
         if (!isGroupAlive(playerParty) || !isGroupAlive(opponentParty)) {
           break;
         }
-        outputLivingCombatants(playerParty, opponentParty);
 
         out("Your turn!");
+        pause(2000);
       }
 
       // Outputs the state of the battle.
