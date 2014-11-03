@@ -17,7 +17,8 @@ public class MartialArtist extends Adventurer {
 
   public String attack(Adventurer target) {
     String output = "";
-    int damage = rand_.nextInt(this.getSTR() + 5);
+    int damage = rand_.nextInt(this.getSTR() + 5) +
+        rand_.nextInt(this.getDEX() + 5);
     if (damage > 0) {
       target.setHP(target.getHP() - damage);
       output += this.getName() + " dealt " + damage + " damage to "
@@ -31,12 +32,12 @@ public class MartialArtist extends Adventurer {
 
   public String specialAttack(Adventurer target) {
     String output = "";
-    int damage = rand_.nextInt(this.getSTR() + 5)
-        + rand_.nextInt(this.getDEX() + 5);
+    int damage = rand_.nextInt(this.getSTR() + 5) +
+        rand_.nextInt(this.getDEX() + 5);
     if (damage > 0) {
       if (this.getExpendableStat() > damage) {
         this.setExpendableStat(this.getExpendableStat() - damage);
-        if (rand_.nextInt(70) < this.getDEX() + this.getSTR()) {
+        if (rand_.nextInt(100) <= this.getDEX() + this.getSTR()) {
           damage += this.getSTR();
           output += "Critical strike!\n";
         }

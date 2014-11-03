@@ -55,6 +55,17 @@ public abstract class Adventurer {
     this.INT_ = INT;
   }
 
+  public String getStats() {
+    return this.getName() + "\tHP: " + this.getHP() + "\tSTR: " + this.getSTR()
+        + "\tDEX: " + this.getDEX() + "\tINT: " + this.getINT();
+  }
+  
+  public void setStats(int STR, int DEX, int INT) {
+    this.setSTR(STR);
+    this.setDEX(DEX);
+    this.setINT(INT);
+  }
+  
   public int getExpendableStat() {
     return this.expendableStat_;
   }
@@ -65,11 +76,6 @@ public abstract class Adventurer {
 
   public String toString() {
     return getName();
-  }
-
-  public String getStats() {
-    return this.getName() + "\tHP: " + this.getHP() + "\tSTR: " + this.getSTR()
-        + "\tDEX: " + this.getDEX() + "\tINT: " + this.getINT();
   }
 
   public String attack(Adventurer target) {

@@ -9,7 +9,7 @@ public class Game {
   }
   
   public static void flushDisplay () {
-    for (int i = 0; i < 30; ++i) {
+    for (int i = 0; i < 60; ++i) {
       System.out.print("\n");
     }
   }
@@ -57,7 +57,7 @@ public class Game {
     
     stats[2] = 30 - (stats[0] + stats[1]);
     out("Aight bro, then the dude's gonna get " + stats[2] + " INT.");
-    out("\n");
+    pause(2000);
 
     return stats;
   }
@@ -134,26 +134,22 @@ public class Game {
       switch (opponentSelect) {
         case 0:
           opponents[i] = new Wizard("Xerath");
-          opponents[i].setINT(opponentPowerStat);
-          opponents[i].setSTR(opponentSecondaryPowerStat);
+          opponents[i].setStats(opponentSecondaryPowerStat, 0, opponentPowerStat);
           out("You will combat the Wizard " + opponents[i] + ".");
           break;
         case 1:
           opponents[i] = new Warrior("Darius");
-          opponents[i].setSTR(opponentPowerStat);
-          opponents[i].setDEX(opponentSecondaryPowerStat);
+          opponents[i].setStats(opponentPowerStat, opponentSecondaryPowerStat, 0);
           out("You will combat the Warrior " + opponents[i] + ".");
           break;
         case 2:
           opponents[i] = new Rogue("Akali");
-          opponents[i].setDEX(opponentPowerStat);
-          opponents[i].setSTR(opponentSecondaryPowerStat);
+          opponents[i].setStats(opponentSecondaryPowerStat, opponentPowerStat, 0);
           out("You will combat the Rogue " + opponents[i] + ".");
           break;
         case 3:
           opponents[i] = new MartialArtist("Lee Sin");
-          opponents[i].setSTR(opponentPowerStat);
-          opponents[i].setDEX(opponentSecondaryPowerStat);
+          opponents[i].setStats(opponentPowerStat, opponentSecondaryPowerStat, 0);
           out("You will combat the Martial Artist " + opponents[i] + ".");
       }
     }
@@ -307,7 +303,7 @@ public class Game {
       opponentParty = randomSelectOpponents(3);
     }
     outputLivingCombatants(playerParty, opponentParty);
-    pause(5000);
+    pause(4000);
     
     // Determines whether the player or the opponent attacks first.
     boolean turn = rand.nextBoolean();
