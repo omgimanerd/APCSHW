@@ -405,7 +405,7 @@ public class Game {
           opponentParty = randomSelectOpponents(playerParty.length);
           for (int i = 0; i < playerParty.length; ++i) {
             playerParty[i].setHP(75);
-            playerParty[i].setExpendableStat(40);
+            playerParty[i].setExpendableStat(75);
           }
         } else {
           out("Denks for pleying.");
