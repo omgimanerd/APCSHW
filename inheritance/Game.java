@@ -42,7 +42,7 @@ public class Game {
     int[] stats = new int[3];
     out("Yo homie, how much STR should this dude have? 30 stat points available.");
     stats[0] = input.nextInt();
-    while(stats[0] < 0 || stats[0] > 30) {
+    while (stats[0] < 0 || stats[0] > 30) {
       out("Dat ain't a valid STR, bro");
       stats[0] = input.nextInt();
     }
@@ -186,7 +186,7 @@ public class Game {
 
     String target = "";
     out("Who will " + player + " attack?");
-    String selectionTitle = "abcdeABCDE";
+    String selectionTitle = "abcde";
     for (int i = 0; i < opponents.length; ++i) {
       out(selectionTitle.charAt(i) + ". "
           + opponents[i].getStats());
@@ -194,7 +194,8 @@ public class Game {
 
     while (target.equals("") || selectionTitle.indexOf(target) == -1) {
       target = input.nextLine();
-      if (selectionTitle.equals("") ||
+      target = target.toLowerCase();
+      if (target.equals("") ||
           selectionTitle.indexOf(target) == -1 ||
           selectionTitle.indexOf(target) > opponents.length - 1) {
         out("Invalid target, select another target.");
