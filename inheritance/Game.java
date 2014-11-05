@@ -2,18 +2,23 @@ import java.util.*;
 
 public class Game {
 
+  // This method pauses the terminal for given number of milliseconds.
   public static void pause (int ms) {
     try {
       Thread.sleep(ms);
     } catch (Exception e) {}
   }
   
+  // This method outputs 60 newlines to 'clear' the terminal display.
   public static void flushDisplay () {
     for (int i = 0; i < 60; ++i) {
       System.out.print("\n");
     }
   }
   
+  // This method outputs a given string in a scrolling format by outputting
+  // each character in the string one at a time with a 5 millisecond delay
+  // in between each character.
   public static void out(String str) {
     for (int i = 0; i < str.length(); ++i) {
       System.out.print(str.charAt(i));
@@ -22,10 +27,14 @@ public class Game {
     System.out.print("\n");
   }
 
+  // This method does the same thing as out, but overloads it so that it
+  // can be used for Adventurers.
   public static void out(Adventurer adventurer) {
     out(adventurer.toString());
   }
   
+  // This method returns an array containing stats the user has been
+  // prompted to provide.
   public static int[] userSelectStats() {
     @SuppressWarnings("resource")
     Scanner input = new Scanner(System.in);
@@ -33,15 +42,17 @@ public class Game {
     int[] stats = new int[3];
     out("Yo homie, how much STR should this dude have? 30 stat points available.");
     stats[0] = input.nextInt();
-    while (stats[0] < 0 || stats[0] > 30) {
-      out("Bro, dat ain't a valid STR.");
+    while(stats[0] < 0 || stats[0] > 30) {
+      out("Dat ain't a valid STR, bro");
       stats[0] = input.nextInt();
     }
+
     if (stats[0] == 30) {
       out("Very well, that means this fine fellow will receive no DEX or INT.");
       out("\n");
       stats[1] = 0;
       stats[2] = 0;
+      pause(2000);
       return stats;
     }
     
@@ -51,7 +62,7 @@ public class Game {
     stats[1] = input.nextInt();
     while (stats[1] < 0 || stats[1] > 30 - stats[0]) {
       out("Pardon me sir, but that is not a valid amount of DEX. "
-          + (30 - stats[0]) + "points remaining");
+          + (30 - stats[0]) + " points remaining");
       stats[1] = input.nextInt();
     }
     
@@ -62,6 +73,8 @@ public class Game {
     return stats;
   }
 
+  // Given a number, this method will return an array of Adventurers of the
+  // given length with stats that the user has selected.
   public static Adventurer[] userSelectPlayers(int amount) {
     @SuppressWarnings("resource")
     Scanner input = new Scanner(System.in);
@@ -88,6 +101,7 @@ public class Game {
             && !classSelect.equalsIgnoreCase("d")) {
           out("Invalid selection.");
         }
+        classSelect = classSelect.toLowerCase();
       }
 
       // Allows the user to name themselves.
@@ -121,6 +135,8 @@ public class Game {
     return players;
   }
 
+  // Given a number, this method will return an array of Adventurers of that
+  // length with appropriately randomized stats.
   public static Adventurer[] randomSelectOpponents(int amount) {
     Random rand = new Random();
 
@@ -157,6 +173,9 @@ public class Game {
     return opponents;
   }
 
+  // Given an attacking player and an array of opponents for him to attack,
+  // this method will prompt the player for input to determine which opponent
+  // to attack and what action to undertake when attacking.
   public static void playerCombat(Adventurer player, Adventurer[] opponents) {
     if (!isGroupAlive(opponents)) {
       return;
@@ -167,26 +186,24 @@ public class Game {
 
     String target = "";
     out("Who will " + player + " attack?");
-    String selectionTitle = "abc";
+    String selectionTitle = "abcdeABCDE";
     for (int i = 0; i < opponents.length; ++i) {
       out(selectionTitle.charAt(i) + ". "
           + opponents[i].getStats());
     }
 
-    while (!target.equalsIgnoreCase("a") && !target.equalsIgnoreCase("b")
-        && !target.equalsIgnoreCase("c")) {
+    while (target.equals("") || selectionTitle.indexOf(target) == -1) {
       target = input.nextLine();
-      if (selectionTitle.indexOf(target) != -1) {
-        if (opponents[selectionTitle.indexOf(target)].getHP() <= 0) {
-          out(opponents[selectionTitle.indexOf(target)].toString()
-              + " is already dead.");
-          out("Select another target.");
-          target = "";
-        }
-      }
-      if (!target.equalsIgnoreCase("a") && !target.equalsIgnoreCase("b")
-          && !target.equalsIgnoreCase("c")) {
+      if (selectionTitle.equals("") ||
+          selectionTitle.indexOf(target) == -1 ||
+          selectionTitle.indexOf(target) > opponents.length - 1) {
         out("Invalid target, select another target.");
+        target = "";
+      } else if (opponents[selectionTitle.indexOf(target)].getHP() <= 0) {
+        out(opponents[selectionTitle.indexOf(target)].toString()
+            + " is already dead.");
+        out("Select another target.");
+        target = "";
       }
     }
 
@@ -203,6 +220,7 @@ public class Game {
           && !action.equalsIgnoreCase("c")) {
         out("Invalid action.");
       }
+      action = action.toLowerCase();
     }
     switch (action) {
       case "a":
@@ -213,12 +231,20 @@ public class Game {
         break;
       case "c":
         player.setHP(0);
+        out(player + " committed suicide.");
+        pause(2000);
+        flushDisplay();
+        return;
     }
     
     pause(4000);
     flushDisplay();
   }
 
+  // Given the opponent who will attack and the array of players for him to
+  // attack, this method will select a random player for the opponent to attack
+  // and an action for the opponent to undertake when attacking. This method
+  // will output the state of the skirmish to the screen.
   public static void opponentCombat(Adventurer opponent, Adventurer[] players) {
     if (!isGroupAlive(players)) {
       return;
@@ -242,6 +268,7 @@ public class Game {
     flushDisplay();
   }
 
+  // Outputs only the living players and opponents to the screen.
   public static void outputLivingCombatants(Adventurer[] players,
       Adventurer[] opponents) {
     out("Your party:");
@@ -259,6 +286,7 @@ public class Game {
     out("");
   }
 
+  // Returns true if one or more of the Adventurers in a given array are alive.
   public static boolean isGroupAlive(Adventurer[] group) {
     for (int i = 0; i < group.length; ++i) {
       if (group[i].getHP() > 0) {
@@ -284,10 +312,11 @@ public class Game {
     }
     flushDisplay();
     
+    // Allows the user to customize a party.
     if (customize.equalsIgnoreCase("y")) {
       out("How large is yer party? Maximum of 5.");
       int partySize = input.nextInt();
-      while (partySize < 0 || partySize > 5) {
+      while (partySize <= 0 || partySize > 5) {
         out("Invalid party size. Maximum of 5.");
         partySize = input.nextInt();
       }
@@ -358,7 +387,7 @@ public class Game {
         pause(2000);
       }
 
-      // Outputs the state of the battle.
+      // Outputs the state of the battle and allows for replay.
       if (!isGroupAlive(playerParty)) {
         out("Your party has died, you lose the battle.");
         fighting = false;
