@@ -17,7 +17,8 @@ public class Wizard extends Adventurer {
   
   public String attack(Adventurer target) {
     String output = "";
-    int damage = rand_.nextInt((int)(this.getINT() / 2)) + rand_.nextInt(this.getSTR() + 5);
+    int damage = rand_.nextInt((int)(this.getINT() / 2) + 5) +
+        rand_.nextInt(this.getSTR() + 5);
     if (damage > 0) {
       target.setHP(target.getHP() - damage);
       output += this.getName() + " dealt " + damage +
@@ -31,7 +32,8 @@ public class Wizard extends Adventurer {
   
   public String specialAttack(Adventurer target) {
     String output = "";
-    int damage = rand_.nextInt((int)(this.getINT() * 1.5));
+    int damage = rand_.nextInt(this.getINT() + 5) +
+        rand_.nextInt((int)(this.getINT() / 2) + 5);
     if (damage > 0) {
       if (this.getExpendableStat() > damage) {
         this.setExpendableStat(this.getExpendableStat() - damage);

@@ -37,7 +37,7 @@ public class MartialArtist extends Adventurer {
     if (damage > 0) {
       if (this.getExpendableStat() > damage) {
         this.setExpendableStat(this.getExpendableStat() - damage);
-        if (rand_.nextInt(100) <= this.getDEX() + this.getSTR()) {
+        if (rand_.nextInt(100) <= (2 * this.getDEX()) + this.getSTR()) {
           damage += this.getSTR();
           output += "Critical strike!\n";
         }

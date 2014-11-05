@@ -17,7 +17,7 @@ public class Warrior extends Adventurer {
 
   public String attack(Adventurer target) {
     String output = "";
-    int damage = rand_.nextInt((int)(this.getSTR() * 1.5));
+    int damage = rand_.nextInt((int)(this.getSTR() * 1.5) + 5);
     if (damage > 0) {
       target.setHP(target.getHP() - damage);
       output += this.getName() + " dealt " + damage +

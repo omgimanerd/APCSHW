@@ -3,19 +3,20 @@ import java.util.*;
 public class Game {
 
   // This method pauses the terminal for given number of milliseconds.
-  public static void pause (int ms) {
+  public static void pause(int ms) {
     try {
       Thread.sleep(ms);
-    } catch (Exception e) {}
+    } catch (Exception e) {
+    }
   }
-  
+
   // This method outputs 60 newlines to 'clear' the terminal display.
-  public static void flushDisplay () {
+  public static void flushDisplay() {
     for (int i = 0; i < 60; ++i) {
       System.out.print("\n");
     }
   }
-  
+
   // This method outputs a given string in a scrolling format by outputting
   // each character in the string one at a time with a 5 millisecond delay
   // in between each character.
@@ -32,7 +33,7 @@ public class Game {
   public static void out(Adventurer adventurer) {
     out(adventurer.toString());
   }
-  
+
   // This method returns an array containing stats the user has been
   // prompted to provide.
   public static int[] userSelectStats() {
@@ -49,13 +50,12 @@ public class Game {
 
     if (stats[0] == 30) {
       out("Very well, that means this fine fellow will receive no DEX or INT.");
-      out("\n");
       stats[1] = 0;
       stats[2] = 0;
       pause(2000);
       return stats;
     }
-    
+
     out("Jolly good, now pray tell the exacting amount of DEX that this fine "
         + "Adventurer should possess. " + (30 - stats[0])
         + " points remaining.");
@@ -65,7 +65,7 @@ public class Game {
           + (30 - stats[0]) + " points remaining");
       stats[1] = input.nextInt();
     }
-    
+
     stats[2] = 30 - (stats[0] + stats[1]);
     out("Aight bro, then the dude's gonna get " + stats[2] + " INT.");
     pause(2000);
@@ -124,7 +124,7 @@ public class Game {
           players[i] = new MartialArtist(playerName);
           out("Martial Artist " + playerName + " has joined your party.");
       }
-      
+
       // Takes in stats.
       int[] stats = userSelectStats();
       players[i].setSTR(stats[0]);
@@ -150,22 +150,26 @@ public class Game {
       switch (opponentSelect) {
         case 0:
           opponents[i] = new Wizard("Xerath");
-          opponents[i].setStats(opponentSecondaryPowerStat, 0, opponentPowerStat);
+          opponents[i].setStats(opponentSecondaryPowerStat, 0,
+              opponentPowerStat);
           out("You will combat the Wizard " + opponents[i] + ".");
           break;
         case 1:
           opponents[i] = new Warrior("Darius");
-          opponents[i].setStats(opponentPowerStat, opponentSecondaryPowerStat, 0);
+          opponents[i].setStats(opponentPowerStat, opponentSecondaryPowerStat,
+              0);
           out("You will combat the Warrior " + opponents[i] + ".");
           break;
         case 2:
           opponents[i] = new Rogue("Akali");
-          opponents[i].setStats(opponentSecondaryPowerStat, opponentPowerStat, 0);
+          opponents[i].setStats(opponentSecondaryPowerStat, opponentPowerStat,
+              0);
           out("You will combat the Rogue " + opponents[i] + ".");
           break;
         case 3:
           opponents[i] = new MartialArtist("Lee Sin");
-          opponents[i].setStats(opponentPowerStat, opponentSecondaryPowerStat, 0);
+          opponents[i].setStats(opponentPowerStat, opponentSecondaryPowerStat,
+              0);
           out("You will combat the Martial Artist " + opponents[i] + ".");
       }
     }
@@ -188,16 +192,14 @@ public class Game {
     out("Who will " + player + " attack?");
     String selectionTitle = "abcde";
     for (int i = 0; i < opponents.length; ++i) {
-      out(selectionTitle.charAt(i) + ". "
-          + opponents[i].getStats());
+      out(selectionTitle.charAt(i) + ". " + opponents[i].getStats());
     }
 
     while (target.equals("") || selectionTitle.indexOf(target) == -1) {
       target = input.nextLine();
       target = target.toLowerCase();
-      if (target.equals("") ||
-          selectionTitle.indexOf(target) == -1 ||
-          selectionTitle.indexOf(target) > opponents.length - 1) {
+      if (target.equals("") || selectionTitle.indexOf(target) == -1
+          || selectionTitle.indexOf(target) > opponents.length - 1) {
         out("Invalid target, select another target.");
         target = "";
       } else if (opponents[selectionTitle.indexOf(target)].getHP() <= 0) {
@@ -237,7 +239,7 @@ public class Game {
         flushDisplay();
         return;
     }
-    
+
     pause(4000);
     flushDisplay();
   }
@@ -264,7 +266,7 @@ public class Game {
     } else {
       out(opponent.attack(players[querySelection]));
     }
-    
+
     pause(4000);
     flushDisplay();
   }
@@ -312,7 +314,7 @@ public class Game {
       customize = input.nextLine();
     }
     flushDisplay();
-    
+
     // Allows the user to customize a party.
     if (customize.equalsIgnoreCase("y")) {
       out("How large is yer party? Maximum of 5.");
@@ -333,8 +335,8 @@ public class Game {
       opponentParty = randomSelectOpponents(3);
     }
     outputLivingCombatants(playerParty, opponentParty);
-    pause(4000);
-    
+    pause(3000);
+
     // Determines whether the player or the opponent attacks first.
     boolean turn = rand.nextBoolean();
     if (turn) {
@@ -348,13 +350,13 @@ public class Game {
         }
       }
       out("Your turn!");
-      pause(2000);
+      pause(1000);
     } else {
       out("You shall attack your opponents first.");
-      pause(2000);
+      pause(1000);
       flushDisplay();
     }
-    
+
     boolean fighting = true;
     while (fighting) {
       // Determines the action that the user will undertake.
@@ -371,7 +373,7 @@ public class Game {
           break;
         }
         out("Your opponents' turn!");
-        pause(2000);
+        pause(1000);
 
         // Handle opponent retaliation.
         for (int i = 0; i < opponentParty.length; ++i) {
@@ -385,7 +387,7 @@ public class Game {
         }
 
         out("Your turn!");
-        pause(2000);
+        pause(1000);
       }
 
       // Outputs the state of the battle and allows for replay.
@@ -399,7 +401,7 @@ public class Game {
           out("Invalid selection.");
           fight = input.nextLine();
         }
-        
+
         if (fight.equalsIgnoreCase("y")) {
           out("Yer men have been heiled.");
           opponentParty = randomSelectOpponents(playerParty.length);
@@ -407,13 +409,14 @@ public class Game {
             playerParty[i].setHP(75);
             playerParty[i].setExpendableStat(75);
           }
+          pause(2000);
         } else {
           out("Denks for pleying.");
           return;
         }
       }
     }
-    
+
     input.close();
   }
 }
