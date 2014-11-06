@@ -50,6 +50,7 @@ public class Game {
 
     if (stats[0] == 30) {
       out("Very well, that means this fine fellow will receive no DEX or INT.");
+      out("\n");
       stats[1] = 0;
       stats[2] = 0;
       pause(2000);
@@ -68,6 +69,7 @@ public class Game {
 
     stats[2] = 30 - (stats[0] + stats[1]);
     out("Aight bro, then the dude's gonna get " + stats[2] + " INT.");
+    out("\n");
     pause(2000);
 
     return stats;
