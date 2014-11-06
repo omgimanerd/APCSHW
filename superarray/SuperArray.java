@@ -14,7 +14,13 @@ public class SuperArray {
   }
   
   public int size() {
-    return this.length_;
+    int counter = 0;
+    for (int i = 0; i < this.length_; ++i) {
+      if (this.array_[i] != null) {
+        counter++;
+      }
+    }
+    return counter;
   }
   
   public String toString() {

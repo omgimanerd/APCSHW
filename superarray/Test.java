@@ -10,7 +10,7 @@ public class Test {
     System.out.println(L.get(2));
     L.set(2, new Integer(79));
     System.out.println(L + " " + L.size());
-    System.out.println(L.get(2));
+    System.out.println(L.get(2) + " " + L.size());
     L.add(new Integer(182));
     System.out.println(L);
   }
