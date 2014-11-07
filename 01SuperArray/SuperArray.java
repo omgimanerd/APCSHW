@@ -5,25 +5,43 @@ public class SuperArray {
   private int size_;
   
   public SuperArray() {
-    this(10);
-  }
-  
-  public SuperArray(int length) {
-    this.array_ = new Object[length];
+    this.array_ = new Object[0];
   }
 
   public Object get(int index) {
-    if (index < 0 || index > this.array_.length) {
+    if (index < 0 || index >= this.size_) {
+      System.out.println("Index out of range.");
       return null;
     }
     return this.array_[index];
   }
   
-  public void set(int index, Object object) {
-    if (this.array_[index] == null) {
-      this.size_++;
+  public Object set(int index, Object object) {
+    if (index < 0 || index >= this.size_) {
+      System.out.println("Index out of range.");
+      return null;
     }
+    Object old = this.array_[index];
     this.array_[index] = object;
+    
+    return old;
+  }
+  
+  public Object remove(int index) {
+    if (index < 0 || index >= this.size_) {
+      System.out.println("Index out of range.");
+      return null;
+    }
+    Object removed = this.array_[index];
+    for (int i = index; i < this.size_; ++i) {
+      if (i == this.size_ - 1) {
+        this.array_[i] = null;
+      } else {
+        this.array_[i] = this.array_[i + 1];
+      }
+    }
+    this.resize(this.size_ - 1);
+    return removed;
   }
   
   public void clear() {
@@ -49,12 +67,26 @@ public class SuperArray {
   public void add(Object object) {
     for (int i = 0; i < this.array_.length; ++i) {
       if (this.array_[i] == null) {
+        this.size_++; 
         this.array_[i] = object;
         return;
       }
     }
     this.resize(this.array_.length + 1);
     this.add(object);
+  }
+  
+  public void add(int index, Object object) {
+    Object temp = this.array_[index];
+    this.array_[index] = object;
+    for (int i = index; i < this.size_; ++i) {
+      if (i == this.size_) {
+        this.add(temp);
+        return;
+      } else {
+        temp = this.set(i, temp);
+      }
+    }
   }
   
   public void resize(int newCapacity) {
