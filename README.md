@@ -1,4 +1,4 @@
-apcs
+APCSHW
 ====
 
 Repository for AP Computer Science work.
