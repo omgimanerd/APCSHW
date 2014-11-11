@@ -1,28 +1,25 @@
 public class Test {
   public static void main(String[] args) {
     SuperArray L = new SuperArray();
-    L.add(new Integer(99));
-    L.add(new Integer(23876));
-    L.add(new String("Hi"));
     System.out.println(L + " " + L.size());
-    L.resize(3);
+    L.add(new Integer(69));
+    L.resize(4);
     System.out.println(L + " " + L.size());
-    System.out.println(L.get(2) + " " + L.size());
-    L.add(new Integer(182));
+    L.add(2, new Integer(4));
     System.out.println(L + " " + L.size());
-    L.add(1, new Integer(69));
+    L.add(new Integer(3));
     System.out.println(L + " " + L.size());
-    L.add(new Integer(98));
+    L.resize(5);
     System.out.println(L + " " + L.size());
-    L.add(0, new Integer(69));
+    L.remove(2);
     System.out.println(L + " " + L.size());
-    L.remove(1);
+    L.add(new Integer(3));
     System.out.println(L + " " + L.size());
-    L.set(3, new Integer(14));
+    L.add(new Integer(3));
     System.out.println(L + " " + L.size());
-    L.set(4, new Integer(10));
+    L.add(new Integer(3));
     System.out.println(L + " " + L.size());
-    L.add(new String("test"));
+    L.clear();
     System.out.println(L + " " + L.size());
   }
 }

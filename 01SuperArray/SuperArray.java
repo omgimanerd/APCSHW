@@ -5,23 +5,28 @@ public class SuperArray {
   private int size_;
   
   public SuperArray() {
-    this.array_ = new Object[0];
+    this(10);
+  }
+  
+  public SuperArray(int length) {
+    this.array_ = new Object[length];
   }
 
   public Object get(int index) {
     if (index < 0 || index >= this.size_) {
-      System.out.println("Index out of range.");
-      return null;
+      throw new IndexOutOfBoundsException();
     }
     return this.array_[index];
   }
   
   public Object set(int index, Object object) {
     if (index < 0 || index >= this.size_) {
-      System.out.println("Index out of range.");
-      return null;
+      throw new IndexOutOfBoundsException();
     }
     Object old = this.array_[index];
+    if (object == null) {
+      return this.remove(index);
+    }
     this.array_[index] = object;
     
     return old;
@@ -29,8 +34,7 @@ public class SuperArray {
   
   public Object remove(int index) {
     if (index < 0 || index >= this.size_) {
-      System.out.println("Index out of range.");
-      return null;
+      throw new IndexOutOfBoundsException();
     }
     Object removed = this.array_[index];
     for (int i = index; i < this.size_; ++i) {
@@ -40,11 +44,15 @@ public class SuperArray {
         this.array_[i] = this.array_[i + 1];
       }
     }
-    this.resize(this.size_ - 1);
+    this.size_--;
+    if (this.size_ <= this.array_.length / 2) {
+      this.resize(this.size_ * 2);
+    }
     return removed;
   }
   
   public void clear() {
+    this.resize(10);    
     for (int i = 0; i < this.array_.length; ++i) {
       this.array_[i] = null;
     }
@@ -72,19 +80,29 @@ public class SuperArray {
         return;
       }
     }
-    this.resize(this.array_.length + 1);
+    this.resize(this.size_ * 2);
     this.add(object);
   }
   
   public void add(int index, Object object) {
-    Object temp = this.array_[index];
-    this.array_[index] = object;
-    for (int i = index; i < this.size_; ++i) {
-      if (i == this.size_) {
-        this.add(temp);
-        return;
-      } else {
-        temp = this.set(i, temp);
+    if (index > this.array_.length) {
+      this.resize(this.array_.length * 2);
+    }
+    if (this.array_[index] == null) {
+      this.size_++;
+      this.array_[index] = object;
+      return;
+    } else {
+      Object temp = this.array_[index];
+      this.array_[index] = object;
+      for (int i = index; i < this.array_.length; ++i) {
+        if (i == this.size_ - 1) {
+          this.add(temp);
+          return;
+        } else {
+          this.size_++;
+          temp = this.set(i, temp);
+        }
       }
     }
   }
