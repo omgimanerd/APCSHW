@@ -1,3 +1,5 @@
+// Replicates ArrayLists
+
 public class SuperArray {
 
   private Object[] array_;
@@ -73,7 +75,7 @@ public class SuperArray {
 
   public String toString() {
     String out = "[ ";
-    for (int i = 0; i < this.array_.length; ++i) {
+    for (int i = 0; i < this.size_; ++i) {
       out += this.array_[i] + " ";
     }
     out += "]";
@@ -81,15 +83,13 @@ public class SuperArray {
   }
 
   public void add(Object object) {
-    for (int i = 0; i < this.array_.length; ++i) {
-      if (this.array_[i] == null) {
-        this.size_++;
-        this.array_[i] = object;
-        return;
-      }
+    if (this.size_ < this.array_.length) {
+      this.array_[this.size_] = object;
+      this.size_++;
+    } else {
+      this.resize(this.size_ * 2);
+      this.add(object);
     }
-    this.resize(this.size_ * 2);
-    this.add(object);
   }
 
   public void add(int object) {
@@ -101,13 +101,11 @@ public class SuperArray {
   }
   
   public void add(int index, Object object) {
-    if (index > this.array_.length) {
-      this.resize(this.array_.length * 2);
+    if (index < 0 || index >= this.size_) {
+      throw new IndexOutOfBoundsException();
     }
-    if (this.array_[index] == null) {
-      this.size_++;
-      this.array_[index] = object;
-      return;
+    if (index == this.array_.length) {
+      this.add(object);
     } else {
       Object temp = this.array_[index];
       this.array_[index] = object;

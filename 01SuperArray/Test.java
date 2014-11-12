@@ -11,5 +11,7 @@ public class Test {
     System.out.println(L + " " + L.size());
     L.collapseDuplicates();
     System.out.println(L + " " + L.size());
+    L.add(1, 30);
+    System.out.println(L + " " + L.size());
   }
 }
