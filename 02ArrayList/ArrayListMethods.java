@@ -9,11 +9,25 @@ public class ArrayListMethods {
       }
     }
   }
-  
+
+  // 5 iterations of this runs for ~7600 ms on my computer.
+  /*
+  public static void randomize(ArrayList<Integer> L) {
+    Random rand = new Random();
+    for (int i = L.size(); i > 0; --i) {
+      L.add(L.remove(rand.nextInt(i)));
+    }
+  }
+  */
+
+  // 5 iterations of this runs for ~500 ms on my computer.
   public static void randomize(ArrayList<Integer> L) {
     Random rand = new Random();
     for (int i = 0; i < L.size(); ++i) {
       int toSwap = rand.nextInt(L.size() - i) + i;
+      if (toSwap == i) {
+        continue;
+      }
       int tmp = L.get(i);
       L.set(i, L.get(toSwap));
       L.set(toSwap, tmp);
@@ -29,6 +43,11 @@ public class ArrayListMethods {
     randomize(L);
     randomize(L);
     randomize(L);
-    System.out.println(L);
+    randomize(L);
+    randomize(L);
+    randomize(L);
+    randomize(L);
+    randomize(L);
+    randomize(L);
   }
 }
