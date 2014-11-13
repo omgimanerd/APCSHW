@@ -12,13 +12,6 @@ public class ArrayListMethods {
   
   public static void randomize(ArrayList<Integer> L) {
     Random rand = new Random();
-    for (int i = L.size(); i > 0; --i) {
-      L.add(L.remove(rand.nextInt(i)));
-    }
-  }
-  
-  public static void randomize2(ArrayList<Integer> L) {
-    Random rand = new Random();
     for (int i = 0; i < L.size(); ++i) {
       int toSwap = rand.nextInt(L.size() - i) + i;
       int tmp = L.get(i);
@@ -32,7 +25,10 @@ public class ArrayListMethods {
     for (int i = 0; i < 99999; ++i) {
       L.add(i);
     }
-    randomize2(L);
+    randomize(L);
+    randomize(L);
+    randomize(L);
+    randomize(L);
     System.out.println(L);
   }
 }
