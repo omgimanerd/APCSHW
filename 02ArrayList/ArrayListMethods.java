@@ -5,8 +5,7 @@ public class ArrayListMethods {
   /**
    * Given an ArrayList L, deletes consecutive duplicate elements
    * in L.
-   * @param L An arraylist to delete duplicate
-   *   elements in.
+   * @param L The ArrayList to run this method on.
    */
   public static void collapseDuplicates(ArrayList<Integer> L) {
     for (int i = 0; i < L.size() - 1; ++i) {
@@ -17,21 +16,22 @@ public class ArrayListMethods {
     }
   }
 
-  // 5 iterations of this runs for ~7600 ms on my computer.
-  /*
-  public static void randomize(ArrayList<Integer> L) {
+  /**
+   * Given an ArrayList L, randomizes all the elements in L.
+   * This method takes longer than the randomize() method.
+   * Use: time &lt;method&rt; to measure the time it takes to run.
+   * @param L The ArrayList to run this method on.
+   */
+  public static void randomizeSlow(ArrayList<Integer> L) {
     Random rand = new Random();
     for (int i = L.size(); i > 0; --i) {
       L.add(L.remove(rand.nextInt(i)));
     }
   }
-  */
 
-  // 5 iterations of this runs for ~500 ms on my computer.
   /**
    * Given an ArrayList L, randomizes all the elements in L.
-   * @param L An ArrayList to randomize the elements
-   *   for.
+   * @param L The ArrayList to run this method on.
    */
   public static void randomize(ArrayList<Integer> L) {
     Random rand = new Random();
@@ -44,22 +44,5 @@ public class ArrayListMethods {
       L.set(i, L.get(toSwap));
       L.set(toSwap, tmp);
     }
-  }
-
-  public static void main(String[] args) {
-    ArrayList<Integer> L = new ArrayList<Integer>();
-    for (int i = 0; i < 99999; ++i) {
-      L.add(i);
-    }
-    randomize(L);
-    randomize(L);
-    randomize(L);
-    randomize(L);
-    randomize(L);
-    randomize(L);
-    randomize(L);
-    randomize(L);
-    randomize(L);
-    randomize(L);
   }
 }
