@@ -47,8 +47,7 @@ public class WordGrid {
    *        random characters.
    * @throws FileNotFoundException
    */
-  public void loadFromFile(String filename, boolean fillEmptySpaces)
-      throws FileNotFoundException {
+  public void loadFromFile(String filename, boolean fillEmptySpaces) {
     this.clear();
     File file;
     Scanner read;
@@ -407,7 +406,7 @@ public class WordGrid {
     return true;
   }
 
-  public static void main(String[] args) throws FileNotFoundException {
+  public static void main(String[] args) {
     if (args.length != 4 && args.length != 5) {     
       System.out.println("Usage:");
       System.out.println("java WordGrid <rows> <cols> <filename> <filled> [seed]");
