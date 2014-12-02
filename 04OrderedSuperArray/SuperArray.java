@@ -19,7 +19,7 @@ public class SuperArray {
     return this.array_[index];
   }
 
-  public String set(int index, String string) {
+  public String replace(int index, String string) {
     if (index < 0 || index >= this.size_) {
       throw new IndexOutOfBoundsException();
     }
@@ -32,6 +32,13 @@ public class SuperArray {
     return old;
   }
   
+  public void set(int index, String string) {
+    if (index < 0 || index >= this.size_) {
+      throw new IndexOutOfBoundsException();
+    }
+    this.array_[index] = string;
+  }
+
   public String remove(int index) {
     if (index < 0 || index >= this.size_) {
       throw new IndexOutOfBoundsException();
@@ -97,7 +104,7 @@ public class SuperArray {
           this.add(temp);
           return;
         } else {
-          temp = this.set(i, temp);
+          temp = this.replace(i, temp);
         }
       }
     }

@@ -18,16 +18,10 @@ public class OrderedSuperArray extends SuperArray {
     this.add(string);
   }
 
-  // TODO:
-  // If I override set(), then the superclass uses this set method, how do?
-  /*
-  public String set(int index, String string) {
-    String toReplace = this.array_[index];
+  public void set(int index, String string) {
     this.remove(index);
     this.add(string);
-    return toReplace;
   }
-  */
 
   public static void main(String[] args) {
     OrderedSuperArray a = new OrderedSuperArray();
@@ -37,6 +31,8 @@ public class OrderedSuperArray extends SuperArray {
     a.add("Mellow");
     a.add(0, "zygote");
     a.add("Apple");
+    System.out.println(a);
+    a.set(5, "waffle");
     System.out.println(a);
   }
 }
