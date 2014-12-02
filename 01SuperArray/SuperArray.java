@@ -109,12 +109,12 @@ public class SuperArray {
     } else {
       Object temp = this.array_[index];
       this.array_[index] = object;
-      for (int i = index; i < this.array_.length; ++i) {
-        if (i == this.size_ - 1) {
+      this.size_++;
+      for (int i = index + 1; i < this.size_; ++i) {
+        if (i == this.size_) {
           this.add(temp);
           return;
         } else {
-          this.size_++;
           temp = this.set(i, temp);
         }
       }
@@ -137,13 +137,6 @@ public class SuperArray {
       }
     }
     this.array_ = newArray;
-
-    this.size_ = 0;
-    for (int i = 0; i < newCapacity; ++i) {
-      if (this.array_[i] != null) {
-        this.size_++;
-      }
-    }
   }
 
   public void collapseDuplicates() {
