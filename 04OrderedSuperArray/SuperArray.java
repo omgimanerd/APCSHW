@@ -128,4 +128,16 @@ public class SuperArray {
       }
     }
   }
+
+  public void insertionSort() {
+    for (int i = 1; i < this.size_; ++i) {
+      String tmp = this.array_[i];
+      int c = i;
+      while (c > 0 && tmp.compareTo(this.array_[c - 1]) < 0) {
+        this.array_[c] = this.array_[c - 1];
+        c--;
+      }
+      this.array_[c] = tmp;
+    }
+  }
 }
