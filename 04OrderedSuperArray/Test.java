@@ -1,24 +1,12 @@
+import java.util.Random;
+
 public class Test {
-  public static void main(String[] args) {
+    public static void main(String[] args) {
     SuperArray L = new SuperArray();
-    System.out.println(L + " " + L.size());
-    L.add("hi");
-    L.add("hi");
-    L.add("hi");
-    L.add("hi");
-    L.add("hi");
-    System.out.println(L + " " + L.size());
-    L.add(0, "test");
-    System.out.println(L + " " + L.size());
-    L.add(0, "test2");
-    System.out.println(L + " " + L.size());
-    L.add("cow");
-    L.add("dog");
-    L.add("mosf");
-    L.add("zohf");
-    L.add("meteor");
-    L.add("llama");
-    System.out.println(L + " " + L.size());
+    Random rand = new Random();
+    for (int i = 0; i < 9999; ++i) {
+      L.add("" + (char)(rand.nextInt(26) + 65));
+    }
     L.insertionSort();
     System.out.println(L + " " + L.size());
   }

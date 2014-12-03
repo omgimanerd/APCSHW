@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class SuperArray {
 
   protected String[] array_;
@@ -18,8 +20,8 @@ public class SuperArray {
     }
     return this.array_[index];
   }
-
-  public String replace(int index, String string) {
+  
+  public String set(int index, String string) {
     if (index < 0 || index >= this.size_) {
       throw new IndexOutOfBoundsException();
     }
@@ -30,13 +32,6 @@ public class SuperArray {
     this.array_[index] = string;
 
     return old;
-  }
-  
-  public void set(int index, String string) {
-    if (index < 0 || index >= this.size_) {
-      throw new IndexOutOfBoundsException();
-    }
-    this.array_[index] = string;
   }
 
   public String remove(int index) {
@@ -89,6 +84,22 @@ public class SuperArray {
     }
   }
   
+  /**
+   * This piece of crap is only used for the add function.
+   */
+  private String replace(int index, String string) {
+    if (index < 0 || index >= this.size_) {
+      throw new IndexOutOfBoundsException();
+    }
+    String old = this.array_[index];
+    if (string == null) {
+      return this.remove(index);
+    }
+    this.array_[index] = string;
+
+    return old;
+  }
+
   public void add(int index, String string) {
     if (index < 0 || index >= this.size_) {
       throw new IndexOutOfBoundsException();
@@ -139,5 +150,15 @@ public class SuperArray {
       }
       this.array_[c] = tmp;
     }
+  }
+
+  public static void main(String[] args) {
+    SuperArray L = new SuperArray();
+    Random rand = new Random();
+    for (int i = 0; i < 1000; ++i) {
+      L.add("" + (char)(rand.nextInt(26) + 65));
+    }
+    L.insertionSort();
+    System.out.println(L + " " + L.size());
   }
 }
