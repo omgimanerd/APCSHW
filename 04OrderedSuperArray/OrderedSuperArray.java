@@ -33,26 +33,29 @@ public class OrderedSuperArray extends SuperArray {
 
   public void badInsertionSort(){
     OrderedSuperArray c = new OrderedSuperArray();
+    this.add("test");
     while (this.size() > 0) {
       c.add(this.remove(0));
+      System.out.println(c + " " + c.size());
+      System.out.println(this + " " + this.size());
     }
+    // TODO: Causes stack overflow, wtf?????
+    this.add("hi");
     System.out.println(c + " " + c.size());
     System.out.println(this + " " + this.size());
     
-    while (c.size() > 0) {
-      superadd(c.remove(0));
-    }
+
   }
 
   public static void main(String[] args) {
     OrderedSuperArray L = new OrderedSuperArray();
-
-    L.add("Test");
-    L.add("aest");
-    L.add("yest");
-    L.add("qest");
-    L.add("best");
-    L.add("fest");
+    System.out.println(L + " " + L.size());
+    L.superadd("Test");
+    L.superadd("aest");
+    L.superadd("yest");
+    L.superadd("qest");
+    L.superadd("best");
+    L.superadd("fest");
     System.out.println(L + " " + L.size());
     L.badInsertionSort();
     

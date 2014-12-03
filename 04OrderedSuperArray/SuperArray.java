@@ -48,7 +48,7 @@ public class SuperArray {
     }
     this.size_--;
     if (this.size_ <= this.array_.length / 2) {
-      this.resize(this.size_ * 2);
+      this.resize(this.array_.length / 2);
     }
     return removed;
   }
@@ -126,6 +126,8 @@ public class SuperArray {
     for (int i = 0; i < newCapacity; ++i) {
       if (i < this.array_.length) {
         newArray[i] = this.array_[i];
+      } else {
+        break;
       }
     }
     this.array_ = newArray;
