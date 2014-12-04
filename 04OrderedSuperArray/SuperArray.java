@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class SuperArray {
 
   protected String[] array_;
@@ -26,9 +24,6 @@ public class SuperArray {
       throw new IndexOutOfBoundsException();
     }
     String old = this.array_[index];
-    if (string == null) {
-      return this.remove(index);
-    }
     this.array_[index] = string;
 
     return old;
@@ -40,24 +35,18 @@ public class SuperArray {
     }
     String removed = this.array_[index];
     for (int i = index; i < this.size_; ++i) {
-      if (i == this.size_ - 1) {
-        this.array_[i] = null;
-      } else {
+      if (i < this.size_ - 1) {
         this.array_[i] = this.array_[i + 1];
       }
     }
     this.size_--;
-    if (this.size_ <= this.array_.length / 2) {
+    if (this.size_ <= this.array_.length / 4) {
       this.resize(this.array_.length / 2);
     }
     return removed;
   }
 
   public void clear() {
-    this.resize(10);
-    for (int i = 0; i < this.array_.length; ++i) {
-      this.array_[i] = null;
-    }
     this.size_ = 0;
   }
 
@@ -84,51 +73,26 @@ public class SuperArray {
     }
   }
   
-  /**
-   * This piece of crap is only used for the add function.
-   */
-  private String replace(int index, String string) {
-    if (index < 0 || index >= this.size_) {
-      throw new IndexOutOfBoundsException();
-    }
-    String old = this.array_[index];
-    if (string == null) {
-      return this.remove(index);
-    }
-    this.array_[index] = string;
-
-    return old;
-  }
-
   public void add(int index, String string) {
     if (index < 0 || index >= this.size_) {
       throw new IndexOutOfBoundsException();
     }
-    if (index == this.array_.length) {
-      this.add(string);
-    } else {
-      String temp = this.array_[index];
-      this.array_[index] = string;
-      this.size_++;
-      for (int i = index + 1; i < this.size_; ++i) {
-        if (i == this.size_) {
-          this.add(temp);
-          return;
-        } else {
-          temp = this.replace(i, temp);
-        }
-      }
+
+    if (this.size_ == this.array_.length) {
+      this.resize(this.size_ * 2);
     }
+    for (int i = this.array_.length - 1; i > index; i--) {
+      this.array_[i] = this.array_[i - 1];
+    }
+    this.array_[index] = string;
+    this.size_++;
   }
   
   public void resize(int newCapacity) {
     String[] newArray = new String[newCapacity];
-    for (int i = 0; i < newCapacity; ++i) {
-      if (i < this.array_.length) {
-        newArray[i] = this.array_[i];
-      } else {
-        break;
-      }
+    int size = Math.min(newCapacity, this.size_);
+    for (int i = 0; i < size; ++i) {
+      newArray[i] = this.array_[i];
     }
     this.array_ = newArray;
   }
@@ -152,15 +116,5 @@ public class SuperArray {
       }
       this.array_[c] = tmp;
     }
-  }
-
-  public static void main(String[] args) {
-    SuperArray L = new SuperArray();
-    Random rand = new Random();
-    for (int i = 0; i < 1000; ++i) {
-      L.add("" + (char)(rand.nextInt(26) + 65));
-    }
-    L.insertionSort();
-    System.out.println(L + " " + L.size());
   }
 }

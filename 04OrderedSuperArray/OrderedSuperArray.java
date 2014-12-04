@@ -7,11 +7,11 @@ public class OrderedSuperArray extends SuperArray {
   }
 
   public void add(String string) {
-    if (this.size_ == 0) {
+    if (size() == 0) {
       super.add(string);
       return;
     }
-    for (int i = 0; i < this.size_; ++i) {
+    for (int i = 0; i < size(); ++i) {
       if (string.compareTo(this.array_[i]) <= 0) {
         super.add(i, string);
         return;
@@ -33,39 +33,24 @@ public class OrderedSuperArray extends SuperArray {
 
   public void badInsertionSort(){
     OrderedSuperArray c = new OrderedSuperArray();
-    this.add("test");
     while (this.size() > 0) {
       c.add(this.remove(0));
-      System.out.println(c + " " + c.size());
-      System.out.println(this + " " + this.size());
     }
-    // TODO: Causes stack overflow, wtf?????
-    this.add("hi");
+    while (c.size() > 0) {
+      this.add(c.remove(0));
+    }
     System.out.println(c + " " + c.size());
     System.out.println(this + " " + this.size());
-    
-
   }
 
   public static void main(String[] args) {
     OrderedSuperArray L = new OrderedSuperArray();
-    System.out.println(L + " " + L.size());
-    L.superadd("Test");
-    L.superadd("aest");
-    L.superadd("yest");
-    L.superadd("qest");
-    L.superadd("best");
-    L.superadd("fest");
-    System.out.println(L + " " + L.size());
-    L.badInsertionSort();
-    
-    /*
     Random rand = new Random();
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < 5000; ++i) {
       L.superadd("" + (char)(rand.nextInt(26) + 65));
     }
     System.out.println(L + " " + L.size());
     L.badInsertionSort();
-    System.out.println(L + " " + L.size());*/
+    System.out.println(L + " " + L.size());
   }
 }
