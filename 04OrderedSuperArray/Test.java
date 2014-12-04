@@ -9,5 +9,16 @@ public class Test {
     }
     L.insertionSort();
     System.out.println(L + " " + L.size());
+    L.clear();
+    L.add("hi");
+    L.add("test");
+    System.out.println(L + " " + L.size());
+    L.remove(1);
+    System.out.println(L + " " + L.size());
+    L.add("meh");
+    L.add("trol");
+    L.add("what");
+    System.out.println(L + " " + L.size());
+    System.out.println(L.find("trol"));
   }
 }

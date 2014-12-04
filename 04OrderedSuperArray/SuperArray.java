@@ -34,12 +34,11 @@ public class SuperArray {
       throw new IndexOutOfBoundsException();
     }
     String removed = this.array_[index];
-    for (int i = index; i < this.size_; ++i) {
-      if (i < this.size_ - 1) {
-        this.array_[i] = this.array_[i + 1];
-      }
+    while (index < this.size_ - 1) {
+      this.array_[index] = this.array_[++index + 1];
     }
     this.size_--;
+
     if (this.size_ <= this.array_.length / 4) {
       this.resize(this.array_.length / 2);
     }
@@ -55,9 +54,12 @@ public class SuperArray {
   }
 
   public String toString() {
-    String out = "[ ";
+    String out = "[";
     for (int i = 0; i < this.size_; ++i) {
-      out += this.array_[i] + " ";
+      out += this.array_[i];
+      if (i != this.size_ - 1) {
+        out += ", ";
+      }
     }
     out += "]";
     return out;
@@ -116,5 +118,14 @@ public class SuperArray {
       }
       this.array_[c] = tmp;
     }
+  }
+
+  public int find(String string) {
+    for (int i = 0; i < this.size_; ++i) {
+      if (this.array_[i].equals(string)) {
+        return i;
+      }
+    }
+    return -1;
   }
 }
