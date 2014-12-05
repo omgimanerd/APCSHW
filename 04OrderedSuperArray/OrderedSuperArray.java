@@ -50,14 +50,21 @@ public class OrderedSuperArray extends SuperArray {
     int lowerLimit = 0;
     int upperLimit = this.size();
 
-    int search = (int) Math.ceil((lowerLimit + upperLimit) / 2.0);
+    int search = (lowerLimit + upperLimit) / 2;
+    int maxTries = (int) Math.ceil(Math.log(this.size_));
+    System.out.println("Max tries" + maxTries);
+    int trials = 0;
     while (!this.array_[search].equals(string)) {
+      if (trials > maxTries) {
+        return -1;
+      }
       if (this.array_[search].compareTo(string) > 0) {
         upperLimit = search;
       } else {
         lowerLimit = search;
       }
-      search = (int) Math.ceil((lowerLimit + upperLimit) / 2.0);
+      search = (lowerLimit + upperLimit) / 2;
+      trials++;
     }
     
     while (search - 1 >= 0 && this.array_[search - 1].equals(string)) {
