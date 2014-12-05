@@ -3,7 +3,7 @@ import java.util.Random;
 public class Test {
     public static void main(String[] args) {
     SuperArray L = new SuperArray();
-    for (int i = 0; i < 500000; ++i) {
+    for (int i = 0; i < 100000; ++i) {
       L.add("" + i);
     }
     if (args.length == 0) {

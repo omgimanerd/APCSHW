@@ -111,6 +111,7 @@ public class SuperArray {
   }
   
   public void arraysSort() {
+    this.resize(this.size_);
     Arrays.sort(this.array_);
   }
 
