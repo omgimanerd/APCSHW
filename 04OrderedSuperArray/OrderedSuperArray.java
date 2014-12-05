@@ -31,6 +31,7 @@ public class OrderedSuperArray extends SuperArray {
     return removed;
   }
 
+  // Runtime for a SuperArray of 5000 elements: 0.
   public void badInsertionSort(){
     OrderedSuperArray c = new OrderedSuperArray();
     while (this.size() > 0) {
@@ -43,14 +44,39 @@ public class OrderedSuperArray extends SuperArray {
     System.out.println(this + " " + this.size());
   }
 
+  // Binary search lol
+  // ez pz lemon sqezy
+  public int find(String string) {
+    int lowerLimit = 0;
+    int upperLimit = this.size();
+
+    int search = (int) Math.ceil((lowerLimit + upperLimit) / 2.0);
+    while (!this.array_[search].equals(string)) {
+      if (this.array_[search].compareTo(string) > 0) {
+        upperLimit = search;
+      } else {
+        lowerLimit = search;
+      }
+      search = (int) Math.ceil((lowerLimit + upperLimit) / 2.0);
+    }
+    
+    while (search - 1 >= 0 && this.array_[search - 1].equals(string)) {
+      search--;
+    }
+    
+    return search;
+  }
+
   public static void main(String[] args) {
     OrderedSuperArray L = new OrderedSuperArray();
-    Random rand = new Random();
-    for (int i = 0; i < 5000; ++i) {
-      L.superadd("" + (char)(rand.nextInt(26) + 65));
-    }
     System.out.println(L + " " + L.size());
-    L.badInsertionSort();
+    L.add("hi");
+    L.add("test");
+    L.add("meh");
+    L.add("trol");
+    L.add("trol");
+    L.add("1more");
+    System.out.println(L.find("trol"));
     System.out.println(L + " " + L.size());
   }
 }

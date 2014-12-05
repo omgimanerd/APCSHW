@@ -34,8 +34,8 @@ public class SuperArray {
       throw new IndexOutOfBoundsException();
     }
     String removed = this.array_[index];
-    while (index < this.size_ - 1) {
-      this.array_[index] = this.array_[++index + 1];
+    while (index < this.size_) {
+      this.array_[index] = this.array_[++index];
     }
     this.size_--;
 
@@ -76,7 +76,7 @@ public class SuperArray {
   }
   
   public void add(int index, String string) {
-    if (index < 0 || index >= this.size_) {
+    if (index < 0 || index > this.size_) {
       throw new IndexOutOfBoundsException();
     }
 
