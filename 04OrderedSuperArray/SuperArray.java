@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class SuperArray {
 
   protected String[] array_;
@@ -107,6 +109,10 @@ public class SuperArray {
       }
     }
   }
+  
+  public void arraysSort() {
+    Arrays.sort(this.array_);
+  }
 
   public void insertionSort() {
     for (int i = 1; i < this.size_; ++i) {
@@ -119,6 +125,21 @@ public class SuperArray {
       this.array_[c] = tmp;
     }
   }
+
+  public void selectionSort() {
+    for (int i = 0; i < this.size_; ++i) {
+      int minIndex = i;
+      for (int j = i; j < this.size_; ++j) {
+        if (this.array_[i].compareTo(this.array_[j]) > 0) {
+          minIndex = j;
+        }
+      }
+      String temp = this.array_[i];
+      this.array_[i] = this.array_[minIndex];
+      this.array_[minIndex] = temp;
+    }
+  }
+      
 
   public int find(String string) {
     for (int i = 0; i < this.size_; ++i) {
