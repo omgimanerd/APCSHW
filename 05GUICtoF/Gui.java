@@ -30,10 +30,10 @@ public class Gui extends JFrame implements ActionListener {
     this.parent_.add(this.output_);
     
     this.inputTemp_ = new JTextField(20);
-    this.ctof_ = new JButton("Calcium to Fahrenheit");
+    this.ctof_ = new JButton("Centigrade to Fahrenheit");
     this.ctof_.addActionListener(this);
     this.ctof_.setActionCommand("ctof");
-    this.ftoc_ = new JButton("Fahrenheight to Calcius");
+    this.ftoc_ = new JButton("Fahrenheit to Centigrade");
     this.ftoc_.addActionListener(this);
     this.ftoc_.setActionCommand("ftoc");
     this.userInput_.add(this.inputTemp_);
@@ -44,7 +44,6 @@ public class Gui extends JFrame implements ActionListener {
     this.output_.add(this.display_);
   }
 
-
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
       case "ctof":
@@ -54,6 +53,7 @@ public class Gui extends JFrame implements ActionListener {
         } catch (Exception q) {
           this.display_.setText("Invalid input"); 
         }
+        break;
       case "ftoc":
         try {
           double conversion = Double.parseDouble(this.inputTemp_.getText());
@@ -61,6 +61,7 @@ public class Gui extends JFrame implements ActionListener {
         } catch (Exception q) {
           this.display_.setText("Invalid input"); 
         }
+        break;
     }
   }
   
@@ -69,7 +70,7 @@ public class Gui extends JFrame implements ActionListener {
   }
   
   private double ctof (double c) {
-    return (c * (5.0/9.0)) + 32;
+    return (c * (9.0/5.0)) + 32;
   }
   
   public static void main(String[] args) {
