@@ -128,16 +128,18 @@ public class SuperArray {
   }
 
   public void selectionSort() {
-    for (int i = 0; i < this.size_; ++i) {
+    for (int i = 0; i < this.size_ - 1; ++i) {
       int minIndex = i;
-      for (int j = i; j < this.size_; ++j) {
-        if (this.array_[i].compareTo(this.array_[j]) > 0) {
+      for (int j = i + 1; j < this.size_ - 1; ++j) {
+        if (this.array_[j].compareTo(this.array_[minIndex]) < 0) {
           minIndex = j;
         }
       }
-      String temp = this.array_[i];
-      this.array_[i] = this.array_[minIndex];
-      this.array_[minIndex] = temp;
+      if (minIndex != i) {
+        String temp = this.array_[i];
+        this.array_[i] = this.array_[minIndex];
+        this.array_[minIndex] = temp;
+      }
     }
   }
       
