@@ -16,7 +16,7 @@ public class Sorts {
     }
   }
 
-  public static void bubbleSort(int[] c) {
+  public static void bubble(int[] c) {
     int tmp = 0;
     for (int i = c.length - 1; i > 0; --i) {
       for (int j = 0; j < i; ++j) {
@@ -29,7 +29,7 @@ public class Sorts {
     }
   }
 
-  public static void insertionSort(int[] c) {
+  public static void insertion(int[] c) {
     int tmp, track;
     for (int i = 1; i < c.length; ++i) {
       tmp = c[i];
@@ -42,7 +42,7 @@ public class Sorts {
     }
   }
 
-  public static void selectionSort(int[] c) {
+  public static void selection(int[] c) {
     for (int i = 0; i < c.length - 1; ++i) {
       int minIndex = i;
       for (int j = i + 1; j < c.length; ++j) {
@@ -74,7 +74,7 @@ public class Sorts {
     }
     Sorts.randomize(arr);
     Sorts.out(arr);
-    Sorts.selectionSort(arr);
+    Sorts.selection(arr);
     Sorts.out(arr);
   }
 }
