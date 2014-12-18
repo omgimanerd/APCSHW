@@ -67,7 +67,7 @@ public class Sorts {
   }
 
   private static int getPlaceDigit(int n, int place) {
-    return (n / (int) Math.pow(10, (double) place - 1)) % 10;
+    return Math.abs((n / (int) Math.pow(10, (double) place - 1)) % 10);
   }
 
   private static int getDigitsIn(int n) {
@@ -118,7 +118,7 @@ public class Sorts {
   public static void main(String[] args) {
     int[] c = new int[100];
     for (int i = 0; i < c.length; ++i) {
-      c[i] = i;
+      c[i] = i - 50;
     }
     randomize(c);
     out(c);
