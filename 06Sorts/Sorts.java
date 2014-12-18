@@ -2,6 +2,14 @@ import java.util.*;
 
 public class Sorts {
 
+  public static String name() {
+    return "Lin,Alvin";
+  }
+
+  public static int period() {
+    return 7;
+  }
+
   public static void randomize(int[] c) {
     Random rand = new Random();
     int toSwap, tmp;
