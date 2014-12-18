@@ -66,6 +66,46 @@ public class Sorts {
     }
   }
 
+  private static int getPlaceDigit(int n, int place) {
+    return (n / (int) Math.pow(10, (double) place - 1)) % 10;
+  }
+
+  private static int getDigitsIn(int n) {
+    int digits = 0;
+    while (Math.abs(n) > 0) {
+      n /= 10;
+      digits++;
+    }
+    return digits;
+  }
+
+  public static void radix(int[] c) {
+    ArrayList<ArrayList<Integer>> buckets = new ArrayList<ArrayList<Integer>>();
+    for (int i = 0; i < 10; ++i) {
+      buckets.add(new ArrayList<Integer>());
+    }
+
+    int passes = getDigitsIn(c[0]);
+    for (int i = 1; i < c.length; ++i) {
+      passes = Math.max(passes, c[i]);
+    }
+
+    for (int place = 0; place < passes; ++place) {
+      for (int i = 0; i < c.length; ++i) {
+        buckets.get(getPlaceDigit(c[i], place + 1)).add(c[i]);
+      }
+
+      int counter = 0;
+      for (int i = 0; i < buckets.size(); ++i) {
+        for (int j = 0; j < buckets.get(i).size(); ++j) {
+          c[counter] = buckets.get(i).get(j);
+          counter++;
+        }
+        buckets.get(i).clear();
+      }
+    }
+  }
+
   public static void out(int[] c) {
     String out = "[ ";
     for (int i = 0; i < c.length - 1; ++i) {
@@ -76,13 +116,13 @@ public class Sorts {
   }
 
   public static void main(String[] args) {
-    int[] arr = new int[100];
-    for (int i = 0; i < arr.length; ++i) {
-      arr[i] = i;
+    int[] c = new int[100];
+    for (int i = 0; i < c.length; ++i) {
+      c[i] = i;
     }
-    Sorts.randomize(arr);
-    Sorts.out(arr);
-    Sorts.selection(arr);
-    Sorts.out(arr);
+    randomize(c);
+    out(c);
+    radix(c);
+    out(c);
   }
 }
